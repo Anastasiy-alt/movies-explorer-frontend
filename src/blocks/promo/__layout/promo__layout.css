@@ -1,0 +1,12 @@
+.promo__layout {
+    display: flex;
+    flex-direction: column;
+    margin-left: calc(0.05469 * 100vw);
+}
+
+@media screen and (max-width: 768px) {
+    .promo__layout {
+        margin-left: 0;
+        align-items: center;
+    }
+}

@@ -1,0 +1,15 @@
+.project {
+    max-height: 608px;
+}
+
+@media screen and (max-width: 768px) {
+    .project {
+        max-height: 585px;
+    }
+}
+
+@media screen and (max-width: 625px) {
+    .project {
+        max-height: 641px;
+    }
+}
