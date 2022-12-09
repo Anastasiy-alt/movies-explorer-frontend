@@ -1,8 +1,10 @@
 .promo__title {
+    margin: 0;
+    padding: 0;
     font-style: normal;
     font-weight: 400;
-    font-size: 50px;
-    line-height: 58px;
+    font-size: min(calc(0.03906 * 100vw), 50px);
+    line-height: min(calc(0.04531 * 100vw), 58px);
     color: #FFFFFF;
     max-height: 174px;
     max-width: 640px;

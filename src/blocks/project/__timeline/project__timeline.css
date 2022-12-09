@@ -1,0 +1,20 @@
+.project__timeline {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 36px auto;
+    row-gap: 14px;
+}
+
+@media screen and (max-width: 768px) {
+    .project__timeline {
+        grid-template-columns: 21% 79%;
+    }
+}
+
+@media screen and (max-width: 625px) {
+    .project__timeline {
+        grid-template-columns: 35% 65%;
+        grid-template-rows: 35px auto;
+        row-gap: 10px;
+    }
+}

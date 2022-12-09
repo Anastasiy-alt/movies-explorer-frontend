@@ -16,13 +16,15 @@
 @import url(./blocks/section/__title/section__title.css);
 @import url(./blocks/project/project.css);
 @import url(./blocks/project/__article/project__article.css);
-@import url(./blocks/project/__four-weeks/project__four-weeks.css);
 @import url(./blocks/project/__layout/project__layout.css);
-@import url(./blocks/project/__one-week/project__one-week.css);
 @import url(./blocks/project/__signature/project__signature.css);
 @import url(./blocks/project/__subtitle/project__subtitle.css);
 @import url(./blocks/project/__text/project__text.css);
 @import url(./blocks/project/__timeline/project__timeline.css);
+@import url(./blocks/project/__week/project__week.css);
+@import url(./blocks/project/__week/_amount/project__week_amount_four.css);
+@import url(./blocks/project/__week/_amount/project__week_amount_one.css);
+@import url(./blocks/project/__week-text/project__week-text.css);
 
 /* @import url(./blocks);
 @import url(./blocks);

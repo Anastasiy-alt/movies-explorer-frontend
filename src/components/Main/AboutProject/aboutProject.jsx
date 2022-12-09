@@ -2,7 +2,7 @@
 
 function AboutProject() {
     return (
-        <AboutProject className='project'>
+        <aboutProject className='project'>
 
             <h2 className='section__title'>О проекте</h2>
 
@@ -21,13 +21,13 @@ function AboutProject() {
             </div>
 
             <article className='project__timeline'>
-                <div className='project__one-week'>1 неделя</div>
+                <div className='project__week project__week_amount_one'><p className='project__week-text'>1 неделя</p></div>
+                <div className='project__week project__week_amount_four'><p className='project__week-text'>4 недели</p></div>
                 <p className='project__signature'>Back-end</p>
-                <div className='project__four-weeks'>4 недели</div>
                 <p className='project__signature'>Front-end</p>
             </article>
 
-        </AboutProject>
+        </aboutProject>
     )
 };
 
