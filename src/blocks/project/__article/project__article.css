@@ -10,6 +10,7 @@
     .project__article {
         max-width: min(calc(0.41537 * 100vw), 319px);
     }
+
     .project__article:first-child {
         margin-right: 30px;
     }
@@ -19,7 +20,9 @@
     .project__article {
         max-width: min(calc(0.8875 * 100vw), 319px);
     }
+
     .project__article:first-child {
         margin-right: auto;
+        margin-bottom: 56px;
     }
 }

@@ -14,7 +14,6 @@
 @import url(./blocks/promo/__text/pomo__text.css);
 @import url(./blocks/promo/__title/promo__title.css);
 @import url(./blocks/section/__title/section__title.css);
-@import url(./blocks/project/project.css);
 @import url(./blocks/project/__article/project__article.css);
 @import url(./blocks/project/__layout/project__layout.css);
 @import url(./blocks/project/__signature/project__signature.css);
@@ -25,6 +24,19 @@
 @import url(./blocks/project/__week/_amount/project__week_amount_four.css);
 @import url(./blocks/project/__week/_amount/project__week_amount_one.css);
 @import url(./blocks/project/__week-text/project__week-text.css);
+@import url(./blocks/techs/__block-text/techs__block-text.css);
+@import url(./blocks/techs/__block/techs__block.css);
+@import url(./blocks/techs/__layout/techs__layout.css);
+@import url(./blocks/techs/__set/techs__set.css);
+@import url(./blocks/techs/__subtitle/techs__subtitle.css);
+@import url(./blocks/techs/__text/techs__text.css);
+@import url(./blocks/section/section.css);
+@import url(./blocks/section/__for/section__for_project.css);
+@import url(./blocks/section/__for/section__for_techs.css);
+/* @import url(./blocks/techs);
+@import url(./blocks/techs); */
+
+
 
 /* @import url(./blocks);
 @import url(./blocks);
