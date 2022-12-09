@@ -1,0 +1,27 @@
+.about__text {
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    mix-blend-mode: normal;
+    max-width: calc(0.46875 * 100vw);
+    font-style: normal;
+}
+
+@media screen and (max-width: 768px) {
+    .about__text {
+        font-size: 12px;
+        line-height: 18px;
+        max-width: calc(0.47396 * 100vw);
+    }
+}
+
+@media screen and (max-width: 625px) {
+    .about__text {
+        font-size: 11px;
+        line-height: 16px;
+        max-width: 292px;
+        margin-bottom: 60px;
+    }
+}

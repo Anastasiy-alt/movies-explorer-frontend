@@ -2,6 +2,7 @@
 @import url(./vendor/fonts/fonts.css);
 @import url(./blocks/page/page.css);
 @import url(./blocks/button/button.css);
+@import url(./blocks/link/link.css);
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);
 @import url(./blocks/header/__auth/header__auth.css);
@@ -33,9 +34,24 @@
 @import url(./blocks/section/section.css);
 @import url(./blocks/section/__for/section__for_project.css);
 @import url(./blocks/section/__for/section__for_techs.css);
-/* @import url(./blocks/techs);
-@import url(./blocks/techs); */
-
+@import url(./blocks/about/__info/about__info.css);
+@import url(./blocks/about/__link/about__link.css);
+@import url(./blocks/about/__name/about__name.css);
+@import url(./blocks/about/__photo/about__photo.css); 
+@import url(./blocks/about/__text/about__text.css);
+@import url(./blocks/section/__for/section__for_about.css);
+@import url(./blocks/about/__block/about__block.css);
+@import url(./blocks/about/__about/about__about.css);
+@import url(./blocks/about/__list/about__list.css);
+@import url(./blocks/about/__point/about__point.css);
+@import url(./blocks/about/__portfolio/about__portfolio.css);
+@import url(./blocks/about/__sign/about__sign.css);
+@import url(./blocks/footer/footer.css);
+@import url(./blocks/footer/__block/footer__block.css);
+@import url(./blocks/footer/__link/footer__link.css);
+@import url(./blocks/footer/__title/footer__title.css);
+@import url(./blocks/footer/__year/footer__year.css);
+@import url(./blocks/footer/__block-links/footer__block-links.css);
 
 
 /* @import url(./blocks);

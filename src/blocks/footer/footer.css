@@ -1,0 +1,26 @@
+.footer {
+    width: calc(100% - 2*(0.05469 * 100vw));
+    background: #FAFAFA;
+    max-height: 172px;
+    padding-top: 79px;
+    padding-left: calc(0.05469 * 100vw);
+    padding-right: calc(0.05469 * 100vw);
+}
+
+@media screen and (max-width: 768px) {
+    .footer {
+        max-height: 253px;
+        width: calc(100% - 2*(0.03906 * 100vw));
+        padding-left: calc(0.03906 * 100vw);
+        padding-right: calc(0.03906 * 100vw);
+    }
+}
+
+@media screen and (max-width: 625px) {
+    .footer {
+        max-height: 253px;
+        width: calc(100% - 2*(0.03125 * 100vw));
+        padding-left: calc(0.03125 * 100vw);
+        padding-right: calc(0.03125 * 100vw);
+    }
+}

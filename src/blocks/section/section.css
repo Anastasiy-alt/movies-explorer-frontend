@@ -8,13 +8,13 @@
 @media screen and (max-width: 768px) {
     .section {
         padding-top: 90px;
-        padding-bottom: 110px;
+        padding-bottom: 90px;
     }
 }
 
 @media screen and (max-width: 625px) {
     .section {
         padding-top: 70px;
-        padding-bottom: 110px;
+        padding-bottom: 70px;
     }
 }

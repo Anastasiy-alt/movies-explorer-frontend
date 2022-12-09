@@ -3,6 +3,8 @@ import Header from '../Header/header';
 import Promo from '../Main/Promo/promo';
 import AboutProject from '../Main/AboutProject/aboutProject';
 import Techs from '../Main/Techs/techs';
+import AboutMe from '../Main/AboutMe/aboutMe';
+import Footer from '../Footer/footer';
 
 function App() {
   return (
@@ -15,6 +17,10 @@ function App() {
       <AboutProject />
 
       <Techs />
+
+      <AboutMe />
+
+      <Footer />
 
     </div>
   );

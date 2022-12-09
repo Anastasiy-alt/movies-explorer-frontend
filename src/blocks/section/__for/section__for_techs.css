@@ -1,6 +1,8 @@
 .section__for_techs {
     background: #F5F5F5;
     max-height: 625px;
+    padding-bottom: 100px;
+    padding-top: 100px;
 }
 
 @media screen and (max-width: 768px) {
