@@ -2,7 +2,7 @@ import self from '../../../images/self.jpg';
 
 function AboutMe() {
     return (
-        <aboutMe className='section section__for_about'>
+        <aboutMe className='section section_for_about'>
             <h2 className='section__title'>Студент</h2>
             <div className='about__block'>
                 <div className='about__info'>

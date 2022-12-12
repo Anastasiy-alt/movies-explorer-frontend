@@ -5,6 +5,7 @@ import AboutProject from '../Main/AboutProject/aboutProject';
 import Techs from '../Main/Techs/techs';
 import AboutMe from '../Main/AboutMe/aboutMe';
 import Footer from '../Footer/footer';
+import Preloader from '../Movies/Preloader/Preloader';
 
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
 
       <Header />
 
-      <Promo />
+      <Preloader />
+
+      {/* <Promo />
 
       <AboutProject />
 
@@ -20,7 +23,7 @@ function App() {
 
       <AboutMe />
 
-      <Footer />
+      <Footer /> */}
 
     </div>
   );

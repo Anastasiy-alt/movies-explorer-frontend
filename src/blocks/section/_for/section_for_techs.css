@@ -1,0 +1,19 @@
+.section_for_techs {
+    background: #F5F5F5;
+    max-height: 625px;
+    padding-bottom: 100px;
+    padding-top: 100px;
+}
+
+@media screen and (max-width: 768px) {
+    .section_for_techs {
+        max-height: 567px;
+    }
+}
+
+@media screen and (max-width: 625px) {
+    .section_for_techs {
+        background: #FFF;
+        max-height: 651px;
+    }
+}
