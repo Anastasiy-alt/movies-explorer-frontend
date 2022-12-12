@@ -5,6 +5,7 @@
     justify-content: space-between;
     align-items: center;
     width: 1280px;
+    background-color: #465DFF;
 }
 
 .header__signup {
@@ -28,13 +29,19 @@
     font-size: 12px;
     line-height: 16px;
     color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .header__logo {
     height: 38px;
     width: 38px;
-    margin-left: min(calc(0.05469 * 100vw), 70px);
     /* margin-right: min(calc(0.71797 * 100vw), 919px); */
+}
+
+.header__logo-btn {
+    margin-left: min(calc(0.05469 * 100vw), 70px);
 }
 
 .header__links {
@@ -67,6 +74,7 @@
 .header__auth {
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 
 .header__account {
@@ -87,7 +95,7 @@
     .header__account {
         margin-right: calc(0.05469 * 100vw);
     }
-    .header__logo {
+    .header__logo-btn {
         margin-left: calc(0.05469 * 100vw);
     }
 

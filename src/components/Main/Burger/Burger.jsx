@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import burger from '../../../images/burger.svg';
 import close from '../../../images/Close.svg';
 import person from '../../../images/person.svg';
@@ -35,7 +35,7 @@ function Burger() {
                     Главная
                 </NavLink>
                 <NavLink
-                    to='/'
+                    to='/movies'
                     activeClassName='burger__link_active link'
                     className='burger__link_disactive link'
                     onClick={() => closeMenu()}
@@ -43,7 +43,7 @@ function Burger() {
                     Фильмы
                 </NavLink>
                 <NavLink
-                    to='/'
+                    to='/saved-movies'
                     activeClassName='burger__link_active link'
                     className='burger__link_disactive link'
                     onClick={() => closeMenu()}
@@ -51,7 +51,7 @@ function Burger() {
                     Сохранённые&nbsp;фильмы
                 </NavLink>
                 </div>
-                <button className='header__account button burger__account'><img src={person} alt='Аккаунт.' className='header__img-acc' />Аккаунт</button>
+                <Link className='header__account button burger__account' to='/profile'><img src={person} alt='Аккаунт.' className='header__img-acc' />Аккаунт</Link>
             </div>
         </burger>
     )

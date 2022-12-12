@@ -4,25 +4,28 @@ import { Link } from 'react-router-dom';
 import { Fragment } from 'react';
 import Burger from '../Main/Burger/Burger';
 
-function Header({ userEmail, onSignOut, loggedIn }) {
+function Header({ onSignOut, loggedIn }) {
     return (
         <header className='header'>
-            <img src={logo} alt='Логотип.' className='header__logo' />
+            <Link className='button header__logo-btn' to='/'>
+                <img src={logo} alt='Логотип.' className='header__logo' />
+            </Link>
+            
 
             {loggedIn ? (
                 <Fragment>
                     <div className='header__block-links'>
-                        <Link className="header__link link header__link_for_all-movies" onClick={onSignOut} to="/sign-up">Фильмы</Link>
-                        <Link className="header__link link header__link_for_add-movies" onClick={onSignOut} to="/sign-up">Сохранённые фильмы</Link>
+                        <Link className="header__link link header__link_for_all-movies" onClick={onSignOut} to='/movies'>Фильмы</Link>
+                        <Link className="header__link link header__link_for_add-movies" onClick={onSignOut} to='/saved-movies'>Сохранённые фильмы</Link>
                     </div>
-                    <button className='header__account button'><img src={person} alt='Аккаунт.' className='header__img-acc' />Аккаунт</button>
+                    <Link className='header__account button' to='/profile'><img src={person} alt='Аккаунт.' className='header__img-acc' />Аккаунт</Link>
                     <Burger />
                 </Fragment>
             ) : (
 
                 <div className='header__auth'>
-                    <button className='button header__signup'>Регистрация</button>
-                    <button className='button header__signin'>Войти</button>
+                    <Link className='header__signup link' to='/signup'>Регистрация</Link>
+                    <Link className='header__signin link' to='/signin'>Войти</Link>
                 </div>
                 // <Routes>
                 //     <Route exact path="/sign-in">
