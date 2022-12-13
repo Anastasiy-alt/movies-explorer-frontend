@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { Fragment } from 'react';
 import Burger from '../Main/Burger/Burger';
 
-function Header({ onSignOut, loggedIn }) {
+function Header({ onSignOut, loggedIn, movies }) {
     return (
-        <header className='header'>
+        <header className={`header ${movies && 'header_white'}`}>
             <Link className='button header__logo-btn' to='/'>
                 <img src={logo} alt='Логотип.' className='header__logo' />
             </Link>
@@ -18,7 +18,7 @@ function Header({ onSignOut, loggedIn }) {
                         <Link className="header__link link header__link_for_all-movies" onClick={onSignOut} to='/movies'>Фильмы</Link>
                         <Link className="header__link link header__link_for_add-movies" onClick={onSignOut} to='/saved-movies'>Сохранённые фильмы</Link>
                     </div>
-                    <Link className='header__account button' to='/profile'><img src={person} alt='Аккаунт.' className='header__img-acc' />Аккаунт</Link>
+                    <Link className='header__account button link' to='/profile'><img src={person} alt='Аккаунт.' className='header__img-acc' />Аккаунт</Link>
                     <Burger />
                 </Fragment>
             ) : (

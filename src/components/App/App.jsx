@@ -13,6 +13,7 @@ import { CurrentUserContext } from '../../context/CurrentUserContext';
 import api from '../../utils/Api';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
+import SearchForm from '../Movies/SearchForm/SearchForm';
 
 function App() {
   const history = useHistory();
@@ -44,35 +45,35 @@ function App() {
         history.push("/")
       })
       .catch((err) => console.log(err));
-    api
-      .getInitialCards(jwt)
-      .then((initialCards) => {
-        setCards(initialCards)
-      })
-      .catch((err) => console.log(err));
+    // api
+    //   .getInitialCards(jwt)
+    //   .then((initialCards) => {
+    //     setCards(initialCards)
+    //   })
+    //   .catch((err) => console.log(err));
   }
 
   useEffect(() => {
     tokenCheck()
   }, []);
 
-  useEffect(() => {
-    if (loggedIn) {
-      Promise.all([api.getInitialCards(), api.getUserInfo()])
-        .then(([cardData, userData]) => {
-          setCards(cardData);
-          setCurrentUser(userData);
-        })
-        .catch((err) => {
-          console.log(`Ошибка: ${err}`);
-        })
-    }
-  }, [loggedIn])
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     Promise.all([api.getInitialCards(), api.getUserInfo()])
+  //       .then(([cardData, userData]) => {
+  //         setCards(cardData);
+  //         setCurrentUser(userData);
+  //       })
+  //       .catch((err) => {
+  //         console.log(`Ошибка: ${err}`);
+  //       })
+  //   }
+  // }, [loggedIn])
 
   const handleSignOut = () => {
     setLoggedIn(false);
     localStorage.removeItem('jwt');
-    history.push("/sign-in");
+    history.push("/signin");
   }
 
   const handleUpdateUser = (userData) => {
@@ -124,17 +125,19 @@ function App() {
         console.log(`Ошибка: ${err}`);
       })
   }
-  function handleRegister(email, password) {
+
+  // registration
+  function handleRegister(name, email, password) {
     return auth
-      .register(email, password)
-      .then(() => {
-        setIsSuccess(true);
-        setIsInfoTooltipPopupOpen(true);
-        history.push("/sign-in");
+      .register(name, email, password)
+      .then((user) => {
+        setLoggedIn(true)
+        setCurrentUser(user);
+        // setIsSuccess(true);
+        // setIsInfoTooltipPopupOpen(true);
+        history.push("/signin");
       })
       .catch((err) => {
-        setIsSuccess(false);
-        setIsInfoTooltipPopupOpen(true);
         console.log(`Ошибка: ${err}`);
       })
   }
@@ -188,29 +191,54 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-    <div className="page">
+      <div className="page">
 
-      {/* <Header
-        loggedIn={loggedIn}
-        onSignOut={handleSignOut} /> */}
+        <Switch>
+          {/* <Route exact path='/'>
 
-      {/* <Preloader /> */}
+            <Header
+              loggedIn={loggedIn}
+              onSignOut={handleSignOut}
+              movies='false' />
+            <Promo />
+            <AboutProject />
+            <Techs />
+            <AboutMe />
+            <Footer />
 
-      {/* <Login /> */}
+          </Route> */}
 
-      <Register />
+          <Route exact path='/'>
 
-      {/* <Promo />
+            <Header
+              loggedIn='true'
+              onSignOut={handleSignOut}
+              movies='true' />
 
-      <AboutProject />
+              <SearchForm />
 
-      <Techs />
 
-      <AboutMe />
+          </Route>
 
-      <Footer /> */}
+          <Route exact path='/signup'>
+            <Register onRegister={handleRegister} />
+          </Route>
 
-    </div>
+          <Route exact path='/signin'>
+            <Login onLogin={handleLogin} />
+          </Route>
+
+          <Route exact path='*'>
+            {/* 404  */}
+          </Route>
+
+          <Route>
+            {loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
+          </Route>
+        </Switch>
+        {/* <Preloader /> */}
+
+      </div>
     </CurrentUserContext.Provider>
   );
 }

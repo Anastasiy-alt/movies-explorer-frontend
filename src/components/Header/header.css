@@ -8,6 +8,10 @@
     background-color: #465DFF;
 }
 
+.header_white {
+    background-color: #fff;
+}
+
 .header__signup {
     font-family: 'Inter';
     font-style: normal;

@@ -16,7 +16,7 @@ function Login({ onLogin }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const { name, email, password } = userData
-        onLogin(name, email, password)
+        onLogin(email, password)
 
     }
 

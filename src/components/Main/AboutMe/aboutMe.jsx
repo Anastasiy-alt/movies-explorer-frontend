@@ -2,7 +2,7 @@ import self from '../../../images/self.jpg';
 
 function AboutMe() {
     return (
-        <aboutMe className='section section_for_about'>
+        <section className='section section_for_about'>
             <h2 className='section__title'>Студент</h2>
             <div className='about__block'>
                 <div className='about__info'>
@@ -19,7 +19,7 @@ function AboutMe() {
                 <li className='about__point'><a className='link' href='https://github.com/Anastasiy-alt/russian-travel' target='blank'>Адаптивный сайт</a><a className='link' href='https://github.com/Anastasiy-alt/russian-travel'><span className='about__sign' target='blank'>↗</span></a></li>
                 <li className='about__point'><a className='link' href='https://github.com/Anastasiy-alt/react-mesto-api-full' target='blank'>Одностраничное приложение</a><a className='link' href='https://github.com/Anastasiy-alt/react-mesto-api-full'><span className='about__sign' target='blank'>↗</span></a></li>
             </ul>
-        </aboutMe>
+        </section>
     )
 };
 

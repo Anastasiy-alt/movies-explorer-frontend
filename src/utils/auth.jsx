@@ -1,5 +1,6 @@
 import Api from './Api';
 export const BASE_URL = 'https://api.movies.anastasiya.nomoredomains.club';
+// export const BASE_URL = 'http://localhost:3000';
 
 export const register = (name, email, password) => {
     return fetch(`${BASE_URL}/signup`, {
@@ -8,7 +9,8 @@ export const register = (name, email, password) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, email, password })
+        body: JSON.stringify({ name, email, password }),
+        credentials: 'include',
     })
         .then(Api._check)
 };

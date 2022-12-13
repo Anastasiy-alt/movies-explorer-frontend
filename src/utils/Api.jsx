@@ -78,15 +78,15 @@ class Api {
             .then(res => this._check(res))
     }
 
-    signUp(userData) {
+    signUp(name, email, password) {
         return fetch(`${this._baseUrl}/signup`, {
             credentials: 'include',
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({
-                name: userData.name,
-                password: userData.password,
-                email: userData.email
+                name: name,
+                password: password,
+                email: email
             })
         })
             .then(res => this._check(res));
@@ -95,7 +95,7 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'https://api.movies.anastasiya.nomoredomains.club',
+    baseUrl: 'hhttps://api.movies.anastasiya.nomoredomains.club/',
     headers: {
         'Content-Type': 'application/json',
     }

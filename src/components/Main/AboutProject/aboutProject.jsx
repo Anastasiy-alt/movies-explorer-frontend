@@ -2,7 +2,7 @@
 
 function AboutProject() {
     return (
-        <aboutProject className='section section_for_project'>
+        <section className='section section_for_project'>
 
             <h2 className='section__title'>О проекте</h2>
 
@@ -27,7 +27,7 @@ function AboutProject() {
                 <p className='project__signature'>Front-end</p>
             </article>
 
-        </aboutProject>
+        </section>
     )
 };
 
