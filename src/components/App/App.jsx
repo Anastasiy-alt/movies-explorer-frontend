@@ -104,20 +104,24 @@ function App() {
           <Route exact path='/'>
             <Header
               loggedIn={loggedIn} />
-            <Promo />
-            <AboutProject />
-            <Techs />
-            <AboutMe />
-            <Footer />
+            <main>
+              <Promo />
+              <AboutProject />
+              <Techs />
+              <AboutMe />
+              <Footer />
+            </main>
           </Route>
 
           <Route exact path='/saved-movies'>
-          <Header
+            <Header
               loggedIn='true'
               movies='true' />
-            <SearchForm />
-            <MoviesCardList />
-            <More />
+            <main>
+              <SearchForm />
+              <MoviesCardList />
+              <More />
+            </main>
             <Footer movies='true' />
           </Route>
 
@@ -125,9 +129,11 @@ function App() {
             <Header
               loggedIn='true'
               movies='true' />
-            <SearchForm />
-            <MoviesCardList />
-            <More />
+            <main>
+              <SearchForm />
+              <MoviesCardList />
+              <More />
+            </main>
             <Footer movies='true' />
           </Route>
 
@@ -141,11 +147,13 @@ function App() {
 
           <Route exact path='/profile'>
             <Header
-            loggedIn='true'
-            movies='true' />
-            <Profile
-            handleUpdateUser={handleUpdateUser}
-            onSignOut={handleSignOut} />
+              loggedIn='true'
+              movies='true' />
+            <main>
+              <Profile
+                handleUpdateUser={handleUpdateUser}
+                onSignOut={handleSignOut} />
+            </main>
           </Route>
 
           <Route exact path='*'>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import self from '../../../images/self.jpg';
 
 function AboutMe() {
@@ -15,9 +16,9 @@ function AboutMe() {
             </div>
             <p className='about__portfolio'>Портфолио</p>
             <ul className='about__list'>
-                <li className='about__point'><a className='link' href='https://github.com/Anastasiy-alt/how-to-learn' target='blank'>Статичный сайт</a><a className='link' href='https://github.com/Anastasiy-alt/how-to-learn'><span className='about__sign' target='blank'>↗</span></a></li>
-                <li className='about__point'><a className='link' href='https://github.com/Anastasiy-alt/russian-travel' target='blank'>Адаптивный сайт</a><a className='link' href='https://github.com/Anastasiy-alt/russian-travel'><span className='about__sign' target='blank'>↗</span></a></li>
-                <li className='about__point'><a className='link' href='https://github.com/Anastasiy-alt/react-mesto-api-full' target='blank'>Одностраничное приложение</a><a className='link' href='https://github.com/Anastasiy-alt/react-mesto-api-full'><span className='about__sign' target='blank'>↗</span></a></li>
+                <li className='about__point'><a className='about__point-link link' href='https://github.com/Anastasiy-alt/how-to-learn' target='blank'>Статичный сайт<span className='about__sign' target='blank'>↗</span></a></li>
+                <li className='about__point'><a className='about__point-link link' href='https://github.com/Anastasiy-alt/russian-travel' target='blank'>Адаптивный сайт<span className='about__sign' target='blank'>↗</span></a></li>
+                <li className='about__point'><a className='about__point-link link' href='https://github.com/Anastasiy-alt/react-mesto-api-full' target='blank'>Одностраничное приложение<span className='about__sign' target='blank'>↗</span></a></li>
             </ul>
         </section>
     )

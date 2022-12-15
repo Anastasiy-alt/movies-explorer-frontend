@@ -44,12 +44,15 @@
     width: min(calc(0.89063 * 100vw), 1140px);
     border-bottom: 1px solid #E8E8E8;
     margin-bottom: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.about__point-link {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: baseline;
-    text-decoration: none;
-    color: black;
 }
 
 .about__point:last-child {

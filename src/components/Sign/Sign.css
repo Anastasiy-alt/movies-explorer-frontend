@@ -112,6 +112,7 @@
 @media screen and (max-width: 625px) {
     .sign {
         max-width: 260px;
+        align-items: center;
     }
 
     .sign__logo {
