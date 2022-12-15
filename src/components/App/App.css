@@ -36,16 +36,6 @@
     width: min(calc(0.89063 * 100vw), 1140px);
 }
 
-.section_for_about {
-    background-color: #fff;
-    max-height: 1079px;
-}
-
-.section_for_project {
-    background-color: #fff;
-    max-height: 608px;
-}
-
 .section_for_techs {
     background: #F5F5F5;
     max-height: 625px;
@@ -66,18 +56,6 @@
         padding-top: 90px;
         padding-bottom: 90px;
     }
-
-    .section_for_about {
-        max-height: 994px;
-    }
-
-    .section_for_project {
-        max-height: 585px;
-    }
-
-    .section_for_techs {
-        max-height: 567px;
-    }
 }
 
 @media screen and (max-width: 625px) {
@@ -85,25 +63,12 @@
         padding-top: 70px;
         padding-bottom: 70px;
     }
-
-    .section_for_about {
-        max-height: 1198px;
-    }
-
+    
     .section__title {
         font-size: 18px;
         line-height: 22px;
         padding-bottom: 28px;
         /* width: calc(0.8875 * 100vw); */
-    }
-
-    .section_for_project {
-        max-height: 641px;
-    }
-
-    .section_for_techs {
-        background: #FFF;
-        max-height: 651px;
     }
 }
 

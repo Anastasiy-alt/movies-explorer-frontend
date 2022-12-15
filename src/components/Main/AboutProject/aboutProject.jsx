@@ -2,7 +2,7 @@
 
 function AboutProject() {
     return (
-        <section className='section section_for_project'>
+        <section className='section project'>
 
             <h2 className='section__title'>О проекте</h2>
 

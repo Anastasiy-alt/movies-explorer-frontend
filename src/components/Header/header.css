@@ -40,16 +40,6 @@
     align-items: center;
 }
 
-.header__logo {
-    height: 38px;
-    width: 38px;
-    /* margin-right: min(calc(0.71797 * 100vw), 919px); */
-}
-
-.header__logo-btn {
-    margin-left: min(calc(0.05469 * 100vw), 70px);
-}
-
 .header__links {
     font-size: 13px;
     line-height: 18px;
@@ -63,13 +53,6 @@
 
 .header__link_for_add-movies {
     font-weight: 400;
-}
-
-.header__img-acc {
-    height: 14px;
-    width: 12px;
-    margin-right: 7px;
-    margin-left: 12px;
 }
 
 .header__block-links {
@@ -90,9 +73,6 @@
 @media screen and (max-width: 1280px) {
     .header__account {
         margin-right: calc(0.05469 * 100vw);
-    }
-    .header__logo-btn {
-        margin-left: calc(0.05469 * 100vw);
     }
 
     .header__signin {

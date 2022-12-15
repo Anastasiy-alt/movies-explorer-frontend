@@ -8,7 +8,7 @@ function Toggle() {
     }
 
     return (
-        <label className='toggle__container'>
+        <label className='toggle'>
             <input type='checkbox' onChange={handleClick} className='toggle__input' />
             <div className='toggle__switch' />
             <p className='toggle__text'>Короткометражки</p>

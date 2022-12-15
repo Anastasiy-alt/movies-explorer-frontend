@@ -5,8 +5,8 @@ import logo from '../../images/logo.svg';
 function Sign({ welcome, buttonName, bottomText, linkText, link, handleSubmit, handleChange, userData, register }) {
     return (
         <div className='sign'>
-            <Link className='button header__logo-btn sign__logo' to='/'>
-                <img src={logo} alt='Логотип.' className='header__logo' />
+            <Link className='button logo-btn sign__logo' to='/'>
+                <img src={logo} alt='Логотип.' className='logo' />
             </Link>
 
             <h1 className='sign__title'>{welcome}</h1>

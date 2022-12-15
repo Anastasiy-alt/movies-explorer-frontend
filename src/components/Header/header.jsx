@@ -8,18 +8,18 @@ function Header({ loggedIn, movies }) {
     return (
         <header className={`header ${movies && 'section_white'}`}>
             <div className='header__layout'>
-                <Link className='button header__logo-btn' to='/'>
-                    <img src={logo} alt='Логотип.' className='header__logo' />
+                <Link className='button logo-btn' to='/'>
+                    <img src={logo} alt='Логотип.' className='logo' />
                 </Link>
 
 
                 {loggedIn ? (
                     <Fragment>
                         <div className='header__block-links'>
-                            <NavLink className="header__link link header__link_for_all-movies" activeClassName="header__link_active" to='/movies' exact>Фильмы</NavLink>
-                            <NavLink className="header__link link header__link_for_add-movies" activeClassName="header__link_active" to='/saved-movies' exact>Сохранённые фильмы</NavLink>
+                            <NavLink className="header__link link header__link_for_all-movies" activeClassName="header__link link header__link_active" to='/movies' exact>Фильмы</NavLink>
+                            <NavLink className="header__link link header__link_for_add-movies" activeClassName="header__link link header__link_active" to='/saved-movies' exact>Сохранённые фильмы</NavLink>
                         </div>
-                        <Link className='account__button header__account link' to='/profile'><img src={person} alt='Аккаунт.' className='header__img-acc' />Аккаунт</Link>
+                        <Link className='account-button header__account link' to='/profile'><img src={person} alt='Аккаунт.' className='account-img' />Аккаунт</Link>
                         <Burger />
                     </Fragment>
                 ) : (

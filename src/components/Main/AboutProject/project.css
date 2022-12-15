@@ -1,3 +1,8 @@
+.project {
+    background-color: #fff;
+    max-height: 608px;
+}
+
 .project__week-text {
     padding: 0;
     margin: 0;
@@ -74,6 +79,10 @@
 }
 
 @media screen and (max-width: 768px) {
+    .project {
+        max-height: 585px;
+    }
+    
     .project__timeline {
         grid-template-columns: 21% 79%;
     }
@@ -100,6 +109,10 @@
 }
 
 @media screen and (max-width: 625px) {
+    .project {
+        max-height: 641px;
+    }
+
     .project__timeline {
         grid-template-columns: 35% 65%;
         grid-template-rows: 35px auto;
