@@ -1,0 +1,89 @@
+.card {
+    background: #FDFDFD;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
+    height: min(271px, calc(100vw * 0.21172));
+    width: min(364px, calc(100vw * 0.28438));
+    display: grid;
+    grid-template-columns: auto 44px;
+    grid-template-rows: 36px 32px calc(min(271px, calc(100vw * 0.21172)) - 68px);
+    grid-template-areas:
+        'title button'
+        'time button'
+        'img img';
+    align-items: center;
+}
+
+.card__img {
+    height: calc(min(271px, calc(100vw * 0.21172)) - 68px);
+    width: 100%;
+    object-fit: cover;
+}
+
+.card__title {
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    grid-area: title;
+    margin-left: 14px;
+    /* margin-top: 14px; */
+}
+
+.card__img {
+    grid-area: img;
+}
+
+.card__time {
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    color: #A0A0A0;
+    grid-area: time;
+    margin-left: 14px;
+    margin-bottom: 14px;
+}
+
+.card__button {
+    grid-area: button;
+    margin-right: 14px;
+    height: 30px;
+    background-image: url(../../../images/saved.svg);
+    /* margin-top: 19px; */
+}
+
+.card__button_click {
+    background-image: url(../../../images/save-active.svg);
+}
+
+.card__button_delete {
+    background-image: url(../../../images/delete.svg);
+}
+
+@media screen and (max-width: 768px) {
+    .card {
+        height: min(258px, calc(100vw * 0.33594));
+    width: min(339px, calc(100vw * 0.44141));
+    grid-template-rows: 36px 32px min(calc(100vw * 0.24740), 190px);
+    }
+
+    .card__img {
+        height: min(calc(100vw * 0.24740), 190px);
+    }
+}
+
+@media screen and (max-width: 625px) {
+    .card {
+        height: min(236px, calc(100vw * 0.73750));
+    width: min(300px, calc(100vw * 0.93750));
+    grid-template-rows: 36px 32px min(calc(100vw * 0.52500), 168px);
+    }
+
+    .card__img {
+        height: min(calc(100vw * 0.52500), 168px);
+    }
+}

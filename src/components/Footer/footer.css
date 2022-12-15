@@ -66,6 +66,7 @@
         width: calc(100% - 2*(0.03906 * 100vw));
         padding-left: calc(0.03906 * 100vw);
         padding-right: calc(0.03906 * 100vw);
+        background: #FFF;
     }
 }
 

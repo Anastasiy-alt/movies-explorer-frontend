@@ -1,5 +1,6 @@
 .search {
     margin-top: 80px;
+    max-width: 1140px;
 }
 
 .search__input {
@@ -7,7 +8,7 @@
     margin: 0;
     padding: 0;
     height: 50px;
-    width: calc(0.84844 * 100vw);
+    width: min(calc(0.84844 * 100vw), 1086px);
     border-radius: 8px;
     background: #F9F9F9;
     font-style: normal;

@@ -15,7 +15,7 @@ function Burger() {
     }
 
     return (
-        <burger className='burger'>
+        <div className='burger'>
             <button onClick={handleToggle} className='button burger__button_open'>
                 <img src={burger} alt='burger' className='burger__open' />
             </button>
@@ -51,9 +51,9 @@ function Burger() {
                     Сохранённые&nbsp;фильмы
                 </NavLink>
                 </div>
-                <Link className='header__account button burger__account' to='/profile'><img src={person} alt='Аккаунт.' className='header__img-acc' />Аккаунт</Link>
+                <Link className='account__button button burger__account link' to='/profile' onClick={() => closeMenu()}><img src={person} alt='Аккаунт.' className='header__img-acc' />Аккаунт</Link>
             </div>
-        </burger>
+        </div>
     )
 };
 
