@@ -95,7 +95,7 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'hhttps://api.movies.anastasiya.nomoredomains.club/',
+    baseUrl: 'https://api.movies.anastasiya.nomoredomains.club/',
     headers: {
         'Content-Type': 'application/json',
     }

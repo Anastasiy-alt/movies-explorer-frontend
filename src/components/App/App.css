@@ -63,7 +63,7 @@
         padding-top: 70px;
         padding-bottom: 70px;
     }
-    
+
     .section__title {
         font-size: 18px;
         line-height: 22px;
@@ -72,4 +72,5 @@
     }
 }
 
-/* *,*::before,*::after {outline: 1px solid red} --> все элементы в красной рамке*/
+*,*::before,*::after {outline: 0.1px solid red} 
+/* --> все элементы в красной рамке */
