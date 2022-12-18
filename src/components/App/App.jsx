@@ -20,6 +20,7 @@ import NotFound from '../NotFound/NotFound';
 import Profile from '../Profile/Profile';
 
 function App() {
+
   const history = useHistory();
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -104,24 +105,24 @@ function App() {
           <Route exact path='/'>
             <Header
               loggedIn={loggedIn} />
-            <main>
+            
               <Promo />
               <AboutProject />
               <Techs />
               <AboutMe />
               <Footer />
-            </main>
+           
           </Route>
 
           <Route exact path='/saved-movies'>
             <Header
               loggedIn='true'
               movies='true' />
-            <main>
+            
               <SearchForm />
               <MoviesCardList />
               <More />
-            </main>
+            
             <Footer movies='true' />
           </Route>
 
@@ -129,11 +130,11 @@ function App() {
             <Header
               loggedIn='true'
               movies='true' />
-            <main>
+            
               <SearchForm />
               <MoviesCardList />
               <More />
-            </main>
+            
             <Footer movies='true' />
           </Route>
 
@@ -149,11 +150,11 @@ function App() {
             <Header
               loggedIn='true'
               movies='true' />
-            <main>
+            
               <Profile
                 handleUpdateUser={handleUpdateUser}
                 onSignOut={handleSignOut} />
-            </main>
+            
           </Route>
 
           <Route exact path='*'>

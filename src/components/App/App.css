@@ -72,5 +72,5 @@
     }
 }
 
-*,*::before,*::after {outline: 0.1px solid red} 
+/* *,*::before,*::after {outline: 0.1px solid red}  */
 /* --> все элементы в красной рамке */
