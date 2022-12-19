@@ -1,20 +1,11 @@
 .footer {
-    width: 100%;
-    /* width: 1140px;
+    width: 1140px;
     padding-right: calc((100vw - 1140px) / 2);
-    padding-left: calc((100vw - 1140px) / 2); */
+    padding-left: calc((100vw - 1140px) / 2);
     background: #FAFAFA;
     max-height: 172px;
     padding-top: 79px;
 }
-
-/* .footer__layout {
-    width: 1280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-} */
 
 .footer__year {
     margin: 0;
@@ -52,27 +43,21 @@
     display: flex;
     flex-direction: row;
     column-gap: 20px;
+
 }
 
 .footer__block {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-right: calc((100vw - 1140px));
-    margin-left: calc((100vw - 1140px));
 }
 
 @media screen and (max-width: 1280px) {
-    
     .footer {
-        width: 100%;
+        width: calc(100% - 2*(0.05469 * 100vw));
+        padding-left: calc(0.05469 * 100vw);
+        padding-right: calc(0.05469 * 100vw);
     }
-
-    .footer__block {
-        margin-right: calc(0.05469 * 100vw);
-        margin-left: calc(0.05469 * 100vw);
-    }
-
 }
 
 @media screen and (max-width: 768px) {
