@@ -13,13 +13,9 @@
     padding-top: 110px;
     /* width: min(calc(100% - 2 * (0.05469 * 100vw)), calc(1280px - 2 * (0.05469 * 100vw))); */
     width: 1140px;
-    padding-right: calc((100vw - 1140px) / 2);
-    padding-left: calc((100vw - 1140px) / 2);
+    padding-right: calc((100% - 1140px) / 2);
+    padding-left: calc((100% - 1140px) / 2);
     padding-bottom: 110px;
-}
-
-.section_white {
-    background-color: #fff;
 }
 
 .section__title {
@@ -34,13 +30,6 @@
     padding-bottom: 23px;
     border-bottom: 1px solid #000;
     width: min(calc(0.89063 * 100vw), 1140px);
-}
-
-.section_for_techs {
-    background: #F5F5F5;
-    max-height: 625px;
-    padding-bottom: 100px;
-    padding-top: 100px;
 }
 
 @media screen and (max-width: 1280px) {
@@ -72,5 +61,5 @@
     }
 }
 
-*,*::before,*::after {outline: 0.1px solid red} 
+/* *,*::before,*::after {outline: 0.1px solid red}  */
 /* --> все элементы в красной рамке */

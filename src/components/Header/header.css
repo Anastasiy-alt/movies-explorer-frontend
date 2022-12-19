@@ -5,6 +5,10 @@
     justify-content: center;
 }
 
+.header_white {
+    background-color: #fff;
+}
+
 .header__layout {
     display: flex;
     flex-direction: row;
@@ -40,10 +44,11 @@
     align-items: center;
 }
 
-.header__links {
+.header__link {
     font-size: 13px;
     line-height: 18px;
     font-style: normal;
+
 }
 
 .header__link_for_all-movies {
@@ -58,12 +63,14 @@
 .header__block-links {
     display: flex;
     flex-direction: row;
+    margin-left: 62px;
 }
 
 .header__auth {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-right: min(calc(0.05469 * 100vw), 70px);
 }
 
 .header__link_active{
@@ -75,9 +82,9 @@
         margin-right: calc(0.05469 * 100vw);
     }
 
-    .header__signin {
+    /* .header__signin {
         margin-right: calc(0.05469 * 100vw);
-    }
+    } */
 }
 
 @media screen and (max-width: 768px) {

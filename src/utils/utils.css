@@ -17,6 +17,10 @@
     color: black;
 }
 
+.link_white {
+    color: #FFF;
+}
+
 .link:hover {
     opacity: 0.7;
 }
@@ -33,6 +37,10 @@
     display: flex;
     align-items: center;
     margin-right: min(calc(0.05469 * 100vw), 70px);
+}
+
+.account-button_white {
+    border: 2px solid #F5F5F5;
 }
 
 .logo {
