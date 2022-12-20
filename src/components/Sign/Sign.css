@@ -29,6 +29,8 @@
 }
 
 .sign__input {
+    padding: 0;
+    margin: 0;
     border: none;
     background: #F9F9F9;
     border-radius: 8px;

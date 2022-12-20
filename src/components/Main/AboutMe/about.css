@@ -41,7 +41,8 @@
     line-height: 50px;
     letter-spacing: -0.04em;
     padding-bottom: 19px;
-    width: min(calc(0.89063 * 100vw), 1140px);
+    width: 100%;
+    /* width: min(calc(0.89063 * 100vw), 1140px); */
     border-bottom: 1px solid #E8E8E8;
     margin-bottom: 20px;
     text-decoration: none;

@@ -34,9 +34,13 @@
 
 @media screen and (max-width: 1280px) {
     .section {
-        width: calc(100% - 2 * (0.05469 * 100vw));
-        padding-right: max(calc(0.05469 * 100vw), 18px);
-        padding-left: max(calc(0.05469 * 100vw), 18px);
+        width: calc(100% - 2 * (calc(0.05469 * 100vw)));
+        padding-right: calc(0.05469 * 100vw);
+        padding-left: calc(0.05469 * 100vw);
+    }
+
+    .section__title {
+        width: 100%;
     }
 }
 
@@ -44,7 +48,12 @@
     .section {
         padding-top: 90px;
         padding-bottom: 90px;
+        width: calc(100% - 2 * (0.06510 * 100vw));
+        padding-right: max(calc(0.06510 * 100vw), 18px);
+        padding-left: max(calc(0.06510 * 100vw), 18px);
     }
+
+    
 }
 
 @media screen and (max-width: 625px) {

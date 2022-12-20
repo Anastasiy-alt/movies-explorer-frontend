@@ -5,7 +5,8 @@
     width: min(364px, calc(100vw * 0.28438));
     display: grid;
     grid-template-columns: auto 44px;
-    grid-template-rows: 36px 32px calc(min(271px, calc(100vw * 0.21172)) - 68px);
+    /* grid-template-rows: 36px 32px min(203px, calc(100vw * 0.21172)); */
+    grid-template-rows: 36px 32px auto;
     grid-template-areas:
         'title button'
         'time button'
@@ -14,9 +15,10 @@
 }
 
 .card__img {
-    height: calc(min(271px, calc(100vw * 0.21172)) - 68px);
+    height: min(203px, calc(100vw * 0.21172 - 68px));
     width: 100%;
     object-fit: cover;
+    grid-area: img;
 }
 
 .card__title {
@@ -29,10 +31,6 @@
     grid-area: title;
     margin-left: 14px;
     /* margin-top: 14px; */
-}
-
-.card__img {
-    grid-area: img;
 }
 
 .card__time {
@@ -67,20 +65,21 @@
 @media screen and (max-width: 768px) {
     .card {
         height: min(258px, calc(100vw * 0.33594));
-    width: min(339px, calc(100vw * 0.44141));
-    grid-template-rows: 36px 32px min(calc(100vw * 0.24740), 190px);
+        width: min(339px, calc(100vw * 0.44141));
     }
 
     .card__img {
-        height: min(calc(100vw * 0.24740), 190px);
+        /* height: calc(min(calc(100vw * 0.24740), 190px) - 68px); */
+        height: calc(min(calc(100vw * 0.33594), 258px) - 68px);
     }
 }
 
 @media screen and (max-width: 625px) {
     .card {
         height: min(236px, calc(100vw * 0.73750));
-    width: min(300px, calc(100vw * 0.93750));
-    grid-template-rows: 36px 32px min(calc(100vw * 0.52500), 168px);
+        width: min(300px, calc(100vw * 0.93750));
+        /* grid-template-rows: 36px 32px min(calc(100vw * 0.52500), 168px); */
+        /* grid-template-rows: 36px 32px auto; */
     }
 
     .card__img {
