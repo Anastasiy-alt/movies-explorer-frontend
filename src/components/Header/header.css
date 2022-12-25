@@ -1,0 +1,112 @@
+.header {
+    width: 100%;
+    background-color: #465DFF;
+    display: flex;
+    justify-content: center;
+}
+
+.header_white {
+    background-color: #fff;
+}
+
+.header__layout {
+    display: flex;
+    flex-direction: row;
+    min-height: 74px;
+    justify-content: space-between;
+    align-items: center;
+    width: 1280px;
+}
+
+.header__signup {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: #FFF;
+}
+
+.header__signin {
+    background-color: #2BE080;
+    border-radius: 3px;
+    width: 76px;
+    height: 32px;
+    margin-left: 30px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__link {
+    font-size: 13px;
+    line-height: 18px;
+    font-style: normal;
+
+}
+
+.header__link_for_all-movies {
+    /* font-weight: 500; */
+    margin-right: 16px;
+}
+
+.header__link_for_add-movies {
+    font-weight: 400;
+}
+
+.header__block-links {
+    display: flex;
+    flex-direction: row;
+    margin-left: 62px;
+}
+
+.header__auth {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: min(calc(0.05469 * 100vw), 70px);
+}
+
+.header__link_active{
+    font-weight: 500;
+}
+
+@media screen and (max-width: 1280px) {
+    .header__account {
+        margin-right: calc(0.05469 * 100vw);
+    }
+
+    /* .header__signin {
+        margin-right: calc(0.05469 * 100vw);
+    } */
+}
+
+@media screen and (max-width: 768px) {
+    .header__block-links {
+        display: none;
+    }
+
+    .header__account {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 625px) {
+    .header__signup {
+        font-size: 10px;
+    }
+
+    .header__signin {
+        margin-right: calc(0.04375 * 100vw);
+        font-size: 10px;
+        height: 26px;
+        width: 54px;
+        margin-left: 14px;
+    }
+}

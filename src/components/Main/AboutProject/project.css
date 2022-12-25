@@ -1,0 +1,161 @@
+.project {
+    background-color: #fff;
+    max-height: 608px;
+    max-width: 100vw;
+
+}
+
+.project__week-text {
+    padding: 0;
+    margin: 0;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 9px;
+}
+
+.project__week {
+    height: 36px;
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.project__week_amount_one {
+    background: #2BE080;
+}
+
+.project__week_amount_four {
+    background: #F2F2F2;
+}
+
+.project__timeline {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 36px auto;
+    row-gap: 14px;
+}
+
+.project__text {
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.project__subtitle {
+    margin: 0;
+    padding: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.04em;
+    margin-bottom: 26px;
+}
+
+.project__signature {
+    margin: 0;
+    padding: 0;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #A0A0A0;
+}
+
+.project__layout {
+    display: flex;
+    flex-direction: row;
+    margin-top: 70px;
+    margin-bottom: 110px;
+}
+
+.project__article {
+    max-width: min(calc(0.42969 * 100vw), 550px);
+}
+
+.project__article:first-child {
+    margin-right: 40px;
+}
+
+@media screen and (max-width: 768px) {
+    .project {
+        max-height: 585px;
+    }
+    
+    .project__timeline {
+        grid-template-columns: 21% 79%;
+    }
+
+    .project__subtitle {
+        margin-bottom: 22px;
+    }
+
+    .project__signature {
+        font-weight: 400;
+    }
+
+    .project__layout {
+        margin-bottom: 93px;
+    }
+
+    .project__article {
+        max-width: min(calc(0.41537 * 100vw), 319px);
+    }
+
+    .project__article:first-child {
+        margin-right: 30px;
+    }
+}
+
+@media screen and (max-width: 625px) {
+    .project {
+        max-height: 641px;
+    }
+
+    .project__timeline {
+        grid-template-columns: 35% 65%;
+        grid-template-rows: 35px auto;
+        row-gap: 10px;
+    }
+
+    .project__week-text {
+        margin-bottom: 10px;
+        height: 35px;
+    }
+
+    .project__week-text {
+        font-size: 11px;
+        line-height: 13px;
+        margin-top: 11px;
+    }
+
+    .project__subtitle {
+        margin-bottom: 16px;
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    .project__signature {
+        font-size: 11px;
+        line-height: 13px;
+    }
+
+    .project__layout {
+        margin-top: 60px;
+        flex-direction: column;
+        margin-bottom: 60px;
+        align-items: center;
+    }
+
+    .project__article {
+        max-width: min(calc(0.8875 * 100vw), 319px);
+    }
+
+    .project__article:first-child {
+        margin-right: 0;
+        margin-bottom: 56px;
+    }
+}
