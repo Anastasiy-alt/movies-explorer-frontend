@@ -10,7 +10,7 @@ function Header({ loggedIn, movies }) {
         <header className={`header ${movies && 'header_white'}`}>
             <div className='header__layout'>
                 <Link className='button logo-btn' to='/'>
-                    <img src={logo} alt='Логотип.' className='logo' />
+                    <img src={logo} alt='Логотип.' className='logo rotate' />
                 </Link>
 
 

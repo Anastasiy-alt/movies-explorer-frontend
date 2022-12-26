@@ -8,7 +8,7 @@ function Sign({ welcome, buttonName, bottomText, linkText, link, handleSubmit, h
     return (
         <div className='sign'>
             <Link className='button logo-btn sign__logo' to='/'>
-                <img src={logo} alt='Логотип.' className='logo' />
+                <img src={logo} alt='Логотип.' className='logo rotate' />
             </Link>
 
             <h1 className='sign__title'>{welcome}</h1>

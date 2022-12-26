@@ -5,10 +5,10 @@ import AboutProject from '../Main/AboutProject/aboutProject';
 import Techs from '../Main/Techs/techs';
 import AboutMe from '../Main/AboutMe/aboutMe';
 import Footer from '../Footer/footer';
-// import Preloader from '../Movies/Preloader/Preloader';
+import Preloader from '../Movies/Preloader/Preloader';
 import * as auth from '../../utils/auth';
 import { useState, useEffect } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import api from '../../utils/MainApi';
@@ -21,50 +21,47 @@ import Movies from '../Movies/MoviesComponent';
 function App() {
 
   const history = useHistory();
+  const location = useLocation();
 
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState("");
   const [currentUser, setCurrentUser] = useState({});
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
-    if (jwt) {
+    if (!jwt) {
       return;
     }
     auth
       .checkToken(jwt)
       .then((data) => {
-        setUserEmail(data.email);
         setCurrentUser(data);
         setLoggedIn(true);
-        history.push("/")
+        history.push(location.pathname);
       })
       .catch((err) => console.log(err));
   }
 
   useEffect(() => {
     tokenCheck()
-  }, []);
+  }, [loggedIn]);
 
   useEffect(() => {
-    console.log(loggedIn)
     if (loggedIn) {
-        api.getUser()
-            .then((userData) => {
-              console.log(userData);
-                setCurrentUser(userData);
-            })
-            .catch((err) => {
-                console.log(`Ошибка: ${err}`);
-            })
+      api.getUser()
+        .then((userData) => {
+          setCurrentUser(userData);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        })
     }
-}, [loggedIn])
+  }, [loggedIn])
 
 
   const handleSignOut = () => {
     setLoggedIn(false);
     localStorage.removeItem('jwt');
-    history.push("/signin");
+    history.push("/signup");
   }
 
   const handleUpdateUser = ({ name, email }) => {
@@ -84,8 +81,7 @@ function App() {
         if (data) {
           setLoggedIn(true)
           localStorage.setItem('jwt', data.token);
-          setUserEmail(email);
-          history.push("/");
+          history.push("/movies");
           tokenCheck();
         }
       })
@@ -139,7 +135,8 @@ function App() {
           <ProtectedRoute exact path='/profile'
             component={Profile}
             loggedIn={loggedIn}
-            onUpdateUser={handleUpdateUser} />
+            onUpdateUser={handleUpdateUser}
+            onSignOut={handleSignOut} />
 
           <Route exact path='/signup'>
             <Register onRegister={handleRegister} />
@@ -149,12 +146,18 @@ function App() {
             <Login onLogin={handleLogin} />
           </Route>
 
+          {/* <Route exact path='/loading'>
+            <Preloader />
+          </Route> */}
+
           <Route exact path='*'>
             <NotFound />
           </Route>
 
+          
+
         </Switch>
-        {/* <Preloader /> */}
+
 
       </div>
     </CurrentUserContext.Provider>
