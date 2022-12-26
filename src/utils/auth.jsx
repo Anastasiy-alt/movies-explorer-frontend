@@ -1,28 +1,35 @@
-import Api from './Api';
+import Api from './MainApi';
 export const BASE_URL = 'https://api.movies.anastasiya.nomoredomains.club';
 // export const BASE_URL = 'http://localhost:3000';
 
-export const register = (name, email, password) => {
+export const register = ({ name, email, password }) => {
     return fetch(`${BASE_URL}/signup`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({
+            name: name,
+            password: password,
+            email: email,
+        }),
         credentials: 'include',
     })
         .then(Api._check)
 };
 
-export const authorize = (email, password) => {
+export const authorize = ({ email, password }) => {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+            password: password,
+            email: email,
+        }),
         credentials: 'include'
     })
         .then(Api._check)
@@ -37,6 +44,6 @@ export const checkToken = () => {
         credentials: 'include'
     })
         .then(Api._check)
-        // .then(res => res.json())
-        // .then(data => data)
+    // .then(res => res.json())
+    // .then(data => data)
 }

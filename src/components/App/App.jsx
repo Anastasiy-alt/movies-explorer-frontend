@@ -10,14 +10,13 @@ import * as auth from '../../utils/auth';
 import { useState, useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
-import api from '../../utils/Api';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import api from '../../utils/MainApi';
 import Login from '../Login/Login';
 import Register from '../Register/Register';
-import SearchForm from '../Movies/SearchForm/SearchForm';
-import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
-import More from '../Movies/More/More';
 import NotFound from '../NotFound/NotFound';
 import Profile from '../Profile/Profile';
+import Movies from '../Movies/MoviesComponent';
 
 function App() {
 
@@ -47,14 +46,29 @@ function App() {
     tokenCheck()
   }, []);
 
+  useEffect(() => {
+    console.log(loggedIn)
+    if (loggedIn) {
+        api.getUser()
+            .then((userData) => {
+              console.log(userData);
+                setCurrentUser(userData);
+            })
+            .catch((err) => {
+                console.log(`Ошибка: ${err}`);
+            })
+    }
+}, [loggedIn])
+
+
   const handleSignOut = () => {
     setLoggedIn(false);
     localStorage.removeItem('jwt');
     history.push("/signin");
   }
 
-  const handleUpdateUser = (userData) => {
-    api.setUserInfo(userData)
+  const handleUpdateUser = ({ name, email }) => {
+    api.setUserInfo({ name, email })
       .then((data) => {
         setCurrentUser(data);
       })
@@ -89,7 +103,7 @@ function App() {
         setCurrentUser(user);
         // setIsSuccess(true);
         // setIsInfoTooltipPopupOpen(true);
-        history.push("/signin");
+        history.push("/movies");
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -105,38 +119,27 @@ function App() {
           <Route exact path='/'>
             <Header
               loggedIn={loggedIn} />
-            
-              <Promo />
-              <AboutProject />
-              <Techs />
-              <AboutMe />
-              <Footer />
-           
+            <Promo />
+            <AboutProject />
+            <Techs />
+            <AboutMe />
+            <Footer />
+
           </Route>
 
-          <Route exact path='/saved-movies'>
-            <Header
-              loggedIn='true'
-              movies='true' />
-            
-              <SearchForm />
-              <MoviesCardList />
-              <More />
-            
-            <Footer movies='true' />
-          </Route>
 
-          <Route exact path='/movies'>
-            <Header
-              loggedIn='true'
-              movies='true' />
-            
-              <SearchForm />
-              <MoviesCardList />
-              <More />
-            
-            <Footer movies='true' />
-          </Route>
+          <ProtectedRoute exact path='/saved-movies'
+            component={Movies}
+            loggedIn={loggedIn} />
+
+          <ProtectedRoute exact path='/movies'
+            component={Movies}
+            loggedIn={loggedIn} />
+
+          <ProtectedRoute exact path='/profile'
+            component={Profile}
+            loggedIn={loggedIn}
+            onUpdateUser={handleUpdateUser} />
 
           <Route exact path='/signup'>
             <Register onRegister={handleRegister} />
@@ -144,17 +147,6 @@ function App() {
 
           <Route exact path='/signin'>
             <Login onLogin={handleLogin} />
-          </Route>
-
-          <Route exact path='/profile'>
-            <Header
-              loggedIn='true'
-              movies='true' />
-            
-              <Profile
-                handleUpdateUser={handleUpdateUser}
-                onSignOut={handleSignOut} />
-            
           </Route>
 
           <Route exact path='*'>

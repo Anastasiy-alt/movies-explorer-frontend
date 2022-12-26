@@ -24,14 +24,14 @@ class Api {
             .then(res => this._check(res))
     }
 
-    setUser(userData) {
+    setUserInfo({ name, email}) {
         return fetch(`${this._baseUrl}/users/me`, {
             credentials: 'include',
             headers: this._headers,
             method: 'PATCH',
             body: JSON.stringify({
-                name: userData.name,
-                email: userData.email
+                name: name,
+                email: email
             })
         })
             .then(res => this._check(res))
@@ -77,25 +77,10 @@ class Api {
         })
             .then(res => this._check(res))
     }
-
-    signUp(name, email, password) {
-        return fetch(`${this._baseUrl}/signup`, {
-            credentials: 'include',
-            method: 'POST',
-            headers: this._headers,
-            body: JSON.stringify({
-                name: name,
-                password: password,
-                email: email
-            })
-        })
-            .then(res => this._check(res));
-    }
-
 }
 
 const api = new Api({
-    baseUrl: 'https://api.movies.anastasiya.nomoredomains.club/',
+    baseUrl: 'https://api.movies.anastasiya.nomoredomains.club',
     headers: {
         'Content-Type': 'application/json',
     }

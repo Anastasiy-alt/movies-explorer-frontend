@@ -1,55 +1,62 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../Header/header';
+import { CurrentUserContext } from '../../context/CurrentUserContext';
+import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 
-function Profile({ onSignOut }) {
+function Profile({ onSignOut, onUpdateUser }) {
+    const currentUser = useContext(CurrentUserContext);
+    
+    const { values, handleChange, errors, resetForm } = useFormAndValidation();
 
-    const [name, setName] = useState([]);
-    const [email, setEmail] = useState([]);
-
-    function handleNameChange(name) {
-        setName(name.target.value);
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        onUpdateUser({
+            name: values.name,
+            email: values.email,
+        });
     }
 
-    function handleEmailChange(email) {
-        setEmail(email.target.value);
-    }
-
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     onAddCard({
-    //         name: name,
-    //         email: email,
-    //     });
-    // }
+    useEffect(() => {
+        if (currentUser) {
+          resetForm(currentUser, {}, true);
+        }
+      }, [currentUser, resetForm]);
 
     return (
-        <div className="profile">
-            <h1 className="profile__title">Привет, {name}!</h1>
-            <form className="profile__form">
-                <label className='profile__label'>Имя
-                    <input
-                        onChange={handleNameChange}
-                        value={name || ''}
-                        type="text"
-                        className="profile__item profile__item_name"
-                        name="name"
-                        required />
-                </label>
-                <label className='profile__label'>E-mail
-                    <input
-                        onChange={handleEmailChange}
-                        value={email || ''}
-                        type="url"
-                        className="profile__item profile__item_email"
-                        name="email"
-                        required />
-                </label>
-            </form>
-            <div className="profile__links">
-                <button className='profile__edit button' type='submit'>Редактировать</button>
-                <Link className='profile__logout link' onClick={onSignOut} to="/signup">Выйти из аккаунта</Link>
+        <Fragment>
+            <Header
+                loggedIn='true'
+                movies='true' />
+            <div className="profile">
+                <h1 className="profile__title">Привет, {currentUser.name}!</h1>
+                <form className="profile__form"  onSubmit={handleSubmit}>
+                    <label className='profile__label'>Имя
+                        <input
+                            onChange={handleChange}
+                            value={values.name || ''}
+                            type="text"
+                            className="profile__item profile__item_name"
+                            name="name"
+                            required />
+                    </label>
+                    <label className='profile__label'>E-mail
+                        <input
+                            onChange={handleChange}
+                            value={values.email || ''}
+                            type="email"
+                            className="profile__item profile__item_email"
+                            name="email"
+                            required />
+                    </label>
+                    <span className='profile__error'>{errors.email}</span>
+                    <div className="profile__links">
+                    <button className='profile__edit button' type='submit'>Редактировать</button>
+                    <Link className='profile__logout link' onClick={onSignOut} to="/signup">Выйти из аккаунта</Link>
+                </div>
+                </form>        
             </div>
-        </div>
+        </Fragment>
     )
 }
 
