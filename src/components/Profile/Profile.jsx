@@ -23,7 +23,7 @@ function Profile({ onSignOut, onUpdateUser }) {
         }
       }, [currentUser, resetForm]);
 
-    return (
+      return (
         <Fragment>
             <Header
                 loggedIn='true'

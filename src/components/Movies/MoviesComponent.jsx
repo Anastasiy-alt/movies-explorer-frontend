@@ -5,14 +5,18 @@ import More from "./More/More";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import SearchForm from "./SearchForm/SearchForm";
 
-function Movies({ loggedIn }) {
+function Movies({ loggedIn, button, movies, saveMovie }) {
     return(
     <Fragment>
         <Header
             loggedIn={loggedIn}
             movies='true' />
         <SearchForm />
-        <MoviesCardList />
+        <MoviesCardList
+        button={button}
+        movies={movies}
+        saveMovie={saveMovie}
+        loggedIn={loggedIn} />
         <More />
         <Footer movies='true' />
     </Fragment>

@@ -1,43 +1,54 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
-import one from '../../../images/1.webp'
-import two from '../../../images/2.webp'
-import three from '../../../images/3.webp'
-import four from '../../../images/4.webp'
-import five from '../../../images/5.webp'
-import six from '../../../images/6.webp'
+import { useState, useEffect, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
+import { CurrentUserContext } from "../../../context/CurrentUserContext";
+import api from '../../../utils/MainApi'
 
-function MoviesCardList() {
+function MoviesCardList({ saveMovie, movies, button }) {
+
+    const [moviesSaveList, setMoviesSaveList] = useState([]);
+    
+    let savedPage = false;
+    const location = useLocation();
+
+    if (location.pathname === '/saved-movies') {
+        savedPage = true;
+    }
+
+
+    useEffect(() => {
+        if (savedPage === true) {
+            setMoviesSaveList(saveMovie)
+        }
+    }, [saveMovie, savedPage])
+
+    const currentUser = useContext(CurrentUserContext);
+
+// console.log('card list: ', movies)
+
     return (
         <section className='cardlist'>
-            <MoviesCard 
-                title='Девять'
-                time='1ч 20м'
-                poster={six} />
+            {!savedPage ? movies?.map((movie) => (
+                    <MoviesCard  movie={movie}
+                        key={movie.Id}
+                        // save={api.getSavedMovies(saveMovie, movies)}
+                        // onCardClick={onCardClick}
+                        onCardLike={button}
+                        // onCardDelete={onDeleteClick}
+                         />
+                ))
+            :
+            saveMovie?.map((movie) => (
+                <MoviesCard  movie={movie}
+                    key={movie.Id}
+                    // save={api.getSavedMovies(saveMovie, movies)}
+                    // onCardClick={onCardClick}
+                    onCardLike={button}
+                    // onCardDelete={onDeleteClick}
+                     /> )) 
+            }
 
-            <MoviesCard 
-                title='Тачки'
-                time='1ч 20м'
-                poster={five} />
 
-            <MoviesCard 
-                title='Ранго'
-                time='1ч 20м'
-                poster={four} />
-
-            <MoviesCard
-                title='Человек-паук: через вселенные'
-                time='1ч 20м'
-                poster={three} />
-
-            <MoviesCard
-                title='Валл-и'
-                time='1ч 20м'
-                poster={two} />
-
-            <MoviesCard
-                title='Рататуй'
-                time='1ч 20м'
-                poster={one} />
         </section>
     )
 }

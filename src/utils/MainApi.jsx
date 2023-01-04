@@ -47,24 +47,26 @@ class Api {
 
     }
 
-    addMovies(movieData) {
+    saveMovie(movieData) {
         return fetch(`${this._baseUrl}/movies`, {
             credentials: 'include',
             method: 'POST',
             headers: this._headers,
-            body: JSON.stringify({
+            body: JSON.stringify(
+                {
                 country: movieData.country,
                 director: movieData.director,
                 duration: movieData.duration,
                 year: movieData.year,
                 description: movieData.description,
-                image: movieData.image,
+                image: `https://api.nomoreparties.co${movieData.image.url}`,
                 trailer: movieData.trailer,
                 nameRU: movieData.nameRU,
                 nameEN: movieData.nameEN,
-                thumbnail: movieData.thumbnail,
-                movieId: movieData.movieId
-            })
+                thumbnail: `https://api.nomoreparties.co${movieData.image.formats.thumbnail.url}`,
+                movieId: movieData.Id,
+            }
+            )
         })
             .then(res => this._check(res));
     }
@@ -77,12 +79,24 @@ class Api {
         })
             .then(res => this._check(res))
     }
+
+    logout() {
+        return fetch(`${this._baseUrl}/signout`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: this._headers,
+        })
+            .then(res => this._check(res))
+    }
 }
 
 const api = new Api({
     baseUrl: 'https://api.movies.anastasiya.nomoredomains.club',
+    // baseUrl: 'http://localhost:3001',
     headers: {
+        Accept: "application/json",
         'Content-Type': 'application/json',
+        Origin: 'http://localhost:3000',
     }
 });
 
