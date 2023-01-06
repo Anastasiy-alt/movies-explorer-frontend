@@ -154,17 +154,39 @@ function App() {
   }, [loggedIn])
 
   const handleSaveMovie = (mov) => {
-    console.log('mov', mov)
     api.saveMovie(mov)
-      .then((res) => {
-        console.log(res);
-        setSavedMovies([...savedMovies, res]);
-        // console.log(res) savedMovies
+      .then((mov) => {
+        setSavedMovies([...savedMovies, mov]);
+        console.log('savedMovies', savedMovies)
       })
       .catch((err) => {
-        console.log(`Ошибка: ${err}`);
+        console.dir(err)
+        console.log(`Ошибка: ${err} ${err.message}`);
       });
   }
+
+  const handleMovieDelete = (movie) => {
+    const saveMovie = savedMovies.find((mov) =>
+        mov.movieId === movie.id || mov.movieId === movie.movieId);
+
+    api.deleteSavedMovie(saveMovie._id)
+        .then(() => {
+            const newLSavedMoviesList = savedMovies.filter((mov) => {
+                if (movie.id === mov.movieId || movie.movieId === mov.movieId) {
+                    return false
+                } else {
+                    return true
+                }
+            })
+
+            setSavedMovies(newLSavedMoviesList);
+            console.log(savedMovies)
+        })
+        .catch((err) => {
+          console.dir(err)
+          console.log(`Ошибка: ${err} ${err.message}`);
+        });
+}
 
 
   return (
@@ -190,6 +212,7 @@ function App() {
             movies={movie}
             saveMovie={savedMovies}
             button={handleSaveMovie}
+            handleMovieDelete={handleMovieDelete}
           />
 
           <ProtectedRoute exact path='/movies'
@@ -198,6 +221,7 @@ function App() {
             loggedIn={loggedIn}
             saveMovie={savedMovies}
             button={handleSaveMovie}
+            handleMovieDelete={handleMovieDelete}
           />
 
           <ProtectedRoute exact path='/profile'

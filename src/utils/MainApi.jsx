@@ -60,11 +60,11 @@ class Api {
                 year: movieData.year,
                 description: movieData.description,
                 image: `https://api.nomoreparties.co${movieData.image.url}`,
-                trailer: movieData.trailer,
+                trailerLink: movieData.trailerLink,
                 nameRU: movieData.nameRU,
                 nameEN: movieData.nameEN,
                 thumbnail: `https://api.nomoreparties.co${movieData.image.formats.thumbnail.url}`,
-                movieId: movieData.Id,
+                movieId: movieData.id,
             }
             )
         })
@@ -91,8 +91,8 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'https://api.movies.anastasiya.nomoredomains.club',
-    // baseUrl: 'http://localhost:3001',
+    // baseUrl: 'https://api.movies.anastasiya.nomoredomains.club',
+    baseUrl: 'http://localhost:3001',
     headers: {
         Accept: "application/json",
         'Content-Type': 'application/json',

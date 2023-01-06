@@ -1,55 +1,86 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
-import { useState, useEffect, useContext } from 'react';
+import More
+    from "../More/More";
 import { useLocation } from 'react-router-dom';
-import { CurrentUserContext } from "../../../context/CurrentUserContext";
-import api from '../../../utils/MainApi'
+import useScreenWidth from '../../../hooks/useScreenWidth';
+import { useState, useEffect, Fragment } from "react";
 
-function MoviesCardList({ saveMovie, movies, button }) {
+function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, searchResults }) {
 
-    const [moviesSaveList, setMoviesSaveList] = useState([]);
-    
-    let savedPage = false;
     const location = useLocation();
+    const screenWidth = useScreenWidth();
 
-    if (location.pathname === '/saved-movies') {
-        savedPage = true;
-    }
-
+    const [loadingMov, setLoadingMov] = useState(0);
+    const [showMov, setShowMov] = useState(0);
+    const [moviesListShow, setMoviesListShow] = useState([]);
+    const [moviesSaveList, setMoviesSaveList] = useState([]);
 
     useEffect(() => {
-        if (savedPage === true) {
+        if (movies.length) {
+            const result = movies.filter((item, index) => index < showMov)
+            setMoviesListShow(result)
+        }
+    }, [movies, showMov])
+
+    useEffect(() => {
+        if (screenWidth <= 625) {
+            setShowMov(5);
+            setLoadingMov(2);
+        } else if (screenWidth <= 768 && screenWidth > 625) {
+            setShowMov(8);
+            setLoadingMov(2);
+        } else if (screenWidth > 768) {
+            setShowMov(12);
+            setLoadingMov(3);
+        }
+    }, [screenWidth]);
+
+    const handleShowMoreMovies = () => {
+        setMoviesListShow(movies.slice(0, moviesListShow.length + loadingMov))
+    };
+
+    useEffect(() => {
+        if ((location.pathname === '/saved-movies') === true) {
             setMoviesSaveList(saveMovie)
         }
-    }, [saveMovie, savedPage])
+    }, [saveMovie, location.pathname])
 
-    const currentUser = useContext(CurrentUserContext);
-
-// console.log('card list: ', movies)
-
+    function getSavesMoviesFun(movieList, movie) {
+        return movieList.find((mov) => {
+            return mov.movieId === (movie.id || movie.movieId);
+        });
+    }
+console.dir(saveMovie)
     return (
-        <section className='cardlist'>
-            {!savedPage ? movies?.map((movie) => (
-                    <MoviesCard  movie={movie}
-                        key={movie.Id}
-                        // save={api.getSavedMovies(saveMovie, movies)}
+        <Fragment>
+            <section className='cardlist'>
+                {!(location.pathname === '/saved-movies') ? searchResults.map((movie) => (
+
+                    <MoviesCard movie={movie}
+                        key={movie._id}
+                        save={getSavesMoviesFun(saveMovie, movie)}
                         // onCardClick={onCardClick}
                         onCardLike={button}
-                        // onCardDelete={onDeleteClick}
-                         />
-                ))
-            :
-            saveMovie?.map((movie) => (
-                <MoviesCard  movie={movie}
-                    key={movie.Id}
-                    // save={api.getSavedMovies(saveMovie, movies)}
-                    // onCardClick={onCardClick}
-                    onCardLike={button}
+                        handleMovieDelete={handleMovieDelete}
                     // onCardDelete={onDeleteClick}
-                     /> )) 
-            }
+                    />
+                ))
+                    :
+                    moviesSaveList?.map((movie) => (
+                        <MoviesCard movie={movie}
+                            key={movie._id}
+                            save={saveMovie}
+                            // onCardClick={onCardClick}
+                            onCardLike={button}
+                            handleMovieDelete={handleMovieDelete}
+                        // onCardDelete={onDeleteClick}
+                        />))
+                }
 
 
-        </section>
+            </section>
+            {location.pathname === '/movies' && (movies.length > loadingMov && (<More onClick={handleShowMoreMovies} />))}
+        </Fragment>
     )
 }
 
