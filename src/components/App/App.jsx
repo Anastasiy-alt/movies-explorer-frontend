@@ -5,7 +5,6 @@ import AboutProject from '../Main/AboutProject/aboutProject';
 import Techs from '../Main/Techs/techs';
 import AboutMe from '../Main/AboutMe/aboutMe';
 import Footer from '../Footer/footer';
-import Preloader from '../Movies/Preloader/Preloader';
 import * as auth from '../../utils/auth';
 import { useState, useEffect } from 'react';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
@@ -26,8 +25,8 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
-
-
+  const [isloading, setIsLoading] = useState(false);
+  const [movie, setMovie] = useState([]);
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
@@ -43,11 +42,9 @@ function App() {
     }
   }
 
-
   useEffect(() => {
     tokenCheck()
   }, [loggedIn]);
-
 
   useEffect(() => {
     if (loggedIn) {
@@ -60,8 +57,6 @@ function App() {
         });
     }
   }, [loggedIn])
-
-  const [movie, setMovie] = useState([]);
 
   useEffect(() => {
     if (loggedIn) {
@@ -76,16 +71,9 @@ function App() {
     }
   }, [loggedIn])
 
-
-
   const handleSignOut = () => {
-    // localStorage.removeItem('jwt');
-    // history.push('/signup');
-    // setLoggedIn(false);
-    // setCurrentUser({});
     api.logout()
       .then((data) => {
-        // localStorage.clear();
         localStorage.removeItem('jwt');
         setLoggedIn(false);
         setCurrentUser({});
@@ -123,15 +111,12 @@ function App() {
       })
   }
 
-  // registration
   function handleRegister(name, email, password) {
     return auth
       .register(name, email, password)
       .then((user) => {
         setLoggedIn(true)
         setCurrentUser(user);
-        // setIsSuccess(true);
-        // setIsInfoTooltipPopupOpen(true);
         history.push("/movies");
       })
       .catch((err) => {
@@ -154,45 +139,41 @@ function App() {
   }, [loggedIn])
 
   const handleSaveMovie = (mov) => {
+    setIsLoading(true);
     api.saveMovie(mov)
       .then((mov) => {
         setSavedMovies([...savedMovies, mov]);
-        console.log('savedMovies', savedMovies)
       })
       .catch((err) => {
         console.dir(err)
         console.log(`Ошибка: ${err} ${err.message}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
   const handleMovieDelete = (movie) => {
-    const saveMovie = savedMovies.find((mov) =>
-        mov.movieId === movie.id || mov.movieId === movie.movieId);
-
+    const saveMovie = savedMovies.find((mov) => mov.movieId === movie.id || mov.movieId === movie.movieId);
     api.deleteSavedMovie(saveMovie._id)
-        .then(() => {
-            const newLSavedMoviesList = savedMovies.filter((mov) => {
-                if (movie.id === mov.movieId || movie.movieId === mov.movieId) {
-                    return false
-                } else {
-                    return true
-                }
-            })
-
-            setSavedMovies(newLSavedMoviesList);
-            console.log(savedMovies)
+      .then(() => {
+        const newLSavedMoviesList = savedMovies.filter((mov) => {
+          if (movie.id === mov.movieId || movie.movieId === mov.movieId) {
+            return false
+          } else {
+            return true
+          }
         })
-        .catch((err) => {
-          console.dir(err)
-          console.log(`Ошибка: ${err} ${err.message}`);
-        });
-}
-
+        setSavedMovies(newLSavedMoviesList);
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err} ${err.message}`);
+      });
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-
         <Switch>
           <Route exact path='/'>
             <Header
@@ -205,8 +186,8 @@ function App() {
 
           </Route>
 
-
           <ProtectedRoute exact path='/saved-movies'
+            isloading={isloading}
             component={Movies}
             loggedIn={loggedIn}
             movies={movie}
@@ -216,6 +197,7 @@ function App() {
           />
 
           <ProtectedRoute exact path='/movies'
+            isloading={isloading}
             movies={movie}
             component={Movies}
             loggedIn={loggedIn}

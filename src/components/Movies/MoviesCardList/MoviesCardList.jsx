@@ -5,11 +5,10 @@ import { useLocation } from 'react-router-dom';
 import useScreenWidth from '../../../hooks/useScreenWidth';
 import { useState, useEffect, Fragment } from "react";
 
-function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, searchResults }) {
+function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFilter }) {
 
     const location = useLocation();
     const screenWidth = useScreenWidth();
-
     const [loadingMov, setLoadingMov] = useState(0);
     const [showMov, setShowMov] = useState(0);
     const [moviesListShow, setMoviesListShow] = useState([]);
@@ -45,20 +44,25 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, searchRe
         }
     }, [saveMovie, location.pathname])
 
-    function getSavesMoviesFun(movieList, movie) {
+    function getSavedMoviesFun(movieList, movie) {
         return movieList.find((mov) => {
             return mov.movieId === (movie.id || movie.movieId);
         });
     }
-console.dir(saveMovie)
+
+    const shortMovies = movies.filter(movie => movie.duration < 40)
+    const shortSaveMovies = saveMovie.filter(movie => movie.duration < 40)
+    const moviesShortcheck = moviesFilter ? shortMovies : moviesListShow
+    const moviesShortcheckForSaved = moviesFilter ? shortSaveMovies : moviesSaveList
+
     return (
         <Fragment>
             <section className='cardlist'>
-                {!(location.pathname === '/saved-movies') ? searchResults.map((movie) => (
+                {!(location.pathname === '/saved-movies') ? moviesShortcheck.map((movie) => (
 
                     <MoviesCard movie={movie}
-                        key={movie._id}
-                        save={getSavesMoviesFun(saveMovie, movie)}
+                        key={movie.id}
+                        save={getSavedMoviesFun(saveMovie, movie)}
                         // onCardClick={onCardClick}
                         onCardLike={button}
                         handleMovieDelete={handleMovieDelete}
@@ -66,7 +70,7 @@ console.dir(saveMovie)
                     />
                 ))
                     :
-                    moviesSaveList?.map((movie) => (
+                    moviesShortcheckForSaved?.map((movie) => (
                         <MoviesCard movie={movie}
                             key={movie._id}
                             save={saveMovie}
@@ -79,7 +83,7 @@ console.dir(saveMovie)
 
 
             </section>
-            {location.pathname === '/movies' && (movies.length > loadingMov && (<More onClick={handleShowMoreMovies} />))}
+            {location.pathname === '/movies' && ((moviesShortcheck.length < (moviesFilter ? shortMovies.length : movies.length)) && (<More onClick={handleShowMoreMovies} />))}
         </Fragment>
     )
 }

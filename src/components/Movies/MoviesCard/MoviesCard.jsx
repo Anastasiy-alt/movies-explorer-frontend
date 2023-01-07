@@ -25,13 +25,18 @@ function MoviesCard({ movie, onCardLike, handleMovieDelete, save }) {
         }
     }
 
+    function timeConvert(duration) {
+        let hours = Math.floor(duration / 60);
+        let minutes = duration % 60;
+        return(`${hours}ч ${minutes}м`)
+    }
 
     const cardSaveButtonClassName = `button card__button ${save && 'card__button_click'} ${saved && 'card__button_click'}`
 
     return (
         <article className='card'>
             <h3 className='card__title'>{movie.nameRU}</h3>
-            <p className='card__time'>{movie.duration}</p>
+            <p className='card__time'>{timeConvert(movie.duration)}</p>
             {location.pathname === '/saved-movies' ?
                 <>
                     <button className='button card__button card__button_delete' type="button" onClick={handleRemoveSaveClick}></button>
