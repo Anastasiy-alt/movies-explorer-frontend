@@ -59,6 +59,7 @@ function App() {
   }, [loggedIn])
 
   useEffect(() => {
+    setIsLoading(true);
     if (loggedIn) {
       moviesApi.getMovies()
         .then((moviesData) => {
@@ -66,8 +67,10 @@ function App() {
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
-      // console.log('3 useEffect: ', movie)
     }
   }, [loggedIn])
 
@@ -127,6 +130,7 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
 
   useEffect(() => {
+    setIsLoading(true);
     if (loggedIn) {
       api.getSavedMovies()
         .then((res) => {
@@ -135,11 +139,13 @@ function App() {
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
         })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   }, [loggedIn])
 
   const handleSaveMovie = (mov) => {
-    setIsLoading(true);
     api.saveMovie(mov)
       .then((mov) => {
         setSavedMovies([...savedMovies, mov]);
@@ -148,9 +154,6 @@ function App() {
         console.dir(err)
         console.log(`Ошибка: ${err} ${err.message}`);
       })
-      .finally(() => {
-        setIsLoading(false);
-      });
   }
 
   const handleMovieDelete = (movie) => {

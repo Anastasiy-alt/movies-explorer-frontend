@@ -55,6 +55,8 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
     const moviesShortcheck = moviesFilter ? shortMovies : moviesListShow
     const moviesShortcheckForSaved = moviesFilter ? shortSaveMovies : moviesSaveList
 
+    console.log(moviesShortcheckForSaved)
+
     return (
         <Fragment>
             <section className='cardlist'>
@@ -63,10 +65,8 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
                     <MoviesCard movie={movie}
                         key={movie.id}
                         save={getSavedMoviesFun(saveMovie, movie)}
-                        // onCardClick={onCardClick}
                         onCardLike={button}
                         handleMovieDelete={handleMovieDelete}
-                    // onCardDelete={onDeleteClick}
                     />
                 ))
                     :
@@ -74,10 +74,8 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
                         <MoviesCard movie={movie}
                             key={movie._id}
                             save={saveMovie}
-                            // onCardClick={onCardClick}
                             onCardLike={button}
                             handleMovieDelete={handleMovieDelete}
-                        // onCardDelete={onDeleteClick}
                         />))
                 }
 

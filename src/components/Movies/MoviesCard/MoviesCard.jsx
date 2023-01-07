@@ -18,7 +18,7 @@ function MoviesCard({ movie, onCardLike, handleMovieDelete, save }) {
     };
 
     function handleChangeMovieStatus() {
-        if (((location.pathname === '/saved-movies') && save) || (!(location.pathname === '/saved-movies') && save)) {
+        if (((location.pathname === '/movies') && save) || (!(location.pathname === '/movies') && save)) {
             handleRemoveSaveClick()
         } else {
             handleSaveClick()
