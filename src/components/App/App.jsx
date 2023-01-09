@@ -38,7 +38,10 @@ function App() {
           setLoggedIn(true);
           history.push(location.pathname);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          handleSignOut()
+          console.log(err)}
+          );
     }
   }
 
@@ -75,17 +78,23 @@ function App() {
   }, [loggedIn])
 
   const handleSignOut = () => {
-    api.logout()
-      .then((data) => {
-        localStorage.removeItem('jwt');
-        setLoggedIn(false);
-        setCurrentUser({});
-        history.push('/signup');
-      })
-      .catch((error) => {
-        console.log(`Ошибка: ${error}`);
-      })
-
+    localStorage.clear();
+    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+    setCurrentUser({});
+    history.push('/');
+    // api.logout()
+    //   .then((data) => {
+    //     localStorage.clear();
+    //     localStorage.removeItem('jwt');
+    //     setLoggedIn(false);
+    //     setCurrentUser({});
+    //     history.push('/');
+    //   })
+    //   .catch((error) => {
+    //     console.log(`Ошибка: ${error}`);
+    //     console.dir(error)
+    //   })
   }
 
   const handleUpdateUser = ({ name, email }) => {

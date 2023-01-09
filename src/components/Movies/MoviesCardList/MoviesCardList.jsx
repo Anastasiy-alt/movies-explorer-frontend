@@ -55,8 +55,6 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
     const moviesShortcheck = moviesFilter ? shortMovies : moviesListShow
     const moviesShortcheckForSaved = moviesFilter ? shortSaveMovies : moviesSaveList
 
-    console.log(moviesShortcheckForSaved)
-
     return (
         <Fragment>
             <section className='cardlist'>

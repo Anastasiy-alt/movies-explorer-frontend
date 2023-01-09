@@ -31,7 +31,7 @@ function SearchForm({ onFilter, moviesFilter, keyword, onSeachChange, onSubmit }
                     placeholder='Фильм'
                     className='search__input'
                     name='search'
-                    value={keyword}
+                    value={keyword || ''}
                     onChange={handleChange}
                     required />
 
