@@ -46,7 +46,8 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
 
     function getSavedMoviesFun(movieList, movie) {
         return movieList.find((mov) => {
-            return mov.movieId === (movie.id || movie.movieId);
+            return mov.owner === movie.owner;
+            // return mov.movieId === (movie.id || movie.movieId);
         });
     }
 
@@ -61,7 +62,7 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
                 {!(location.pathname === '/saved-movies') ? moviesShortcheck.map((movie) => (
 
                     <MoviesCard movie={movie}
-                        key={movie.id}
+                        key={movie._id || movie.id}
                         save={getSavedMoviesFun(saveMovie, movie)}
                         onCardLike={button}
                         handleMovieDelete={handleMovieDelete}
@@ -70,7 +71,7 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
                     :
                     moviesShortcheckForSaved?.map((movie) => (
                         <MoviesCard movie={movie}
-                            key={movie._id}
+                            key={movie._id || movie.id}
                             save={saveMovie}
                             onCardLike={button}
                             handleMovieDelete={handleMovieDelete}

@@ -7,7 +7,7 @@ import AboutMe from '../Main/AboutMe/aboutMe';
 import Footer from '../Footer/footer';
 import * as auth from '../../utils/auth';
 import { useState, useEffect } from 'react';
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation, Redirect } from 'react-router-dom';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import api from '../../utils/MainApi';
@@ -28,26 +28,6 @@ function App() {
   const [isloading, setIsLoading] = useState(false);
   const [movie, setMovie] = useState([]);
 
-  const tokenCheck = () => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      auth
-        .checkToken(jwt)
-        .then((data) => {
-          setCurrentUser(data);
-          setLoggedIn(true);
-          history.push(location.pathname);
-        })
-        .catch((err) => {
-          handleSignOut()
-          console.log(err)}
-          );
-    }
-  }
-
-  useEffect(() => {
-    tokenCheck()
-  }, [loggedIn]);
 
   useEffect(() => {
     if (loggedIn) {
@@ -113,9 +93,11 @@ function App() {
       .then((data) => {
         if (data) {
           setLoggedIn(true)
+          console.dir(data)
           localStorage.setItem('jwt', data.token);
           history.push("/movies");
           tokenCheck();
+          setCurrentUser(data);
         }
       })
       .catch((err) => {
@@ -143,7 +125,11 @@ function App() {
     if (loggedIn) {
       api.getSavedMovies()
         .then((res) => {
-          setSavedMovies(res);
+          res.map((mov) => {
+            if (mov.owner === currentUser._id) {
+              setSavedMovies([...savedMovies, mov]);
+            }
+          })
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`);
@@ -157,7 +143,8 @@ function App() {
   const handleSaveMovie = (mov) => {
     api.saveMovie(mov)
       .then((mov) => {
-        setSavedMovies([...savedMovies, mov]);
+        console.log(mov.data)
+        setSavedMovies([...savedMovies, mov.data]);
       })
       .catch((err) => {
         console.dir(err)
@@ -167,6 +154,8 @@ function App() {
 
   const handleMovieDelete = (movie) => {
     const saveMovie = savedMovies.find((mov) => mov.movieId === movie.id || mov.movieId === movie.movieId);
+    console.dir(movie)
+    console.dir(saveMovie)
     api.deleteSavedMovie(saveMovie._id)
       .then(() => {
         const newLSavedMoviesList = savedMovies.filter((mov) => {
@@ -182,6 +171,28 @@ function App() {
         console.log(`Ошибка: ${err} ${err.message}`);
       });
   }
+
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth
+        .checkToken()
+        .then((data) => {
+          setCurrentUser(data);
+          setLoggedIn(true);
+          history.push(location.pathname);
+        })
+        .catch((err) => {
+          handleSignOut()
+          console.log(err)
+        }
+        );
+    }
+  }
+
+  useEffect(() => {
+    tokenCheck()
+  }, [loggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -225,26 +236,18 @@ function App() {
             onSignOut={handleSignOut} />
 
           <Route exact path='/signup'>
-            <Register onRegister={handleRegister} />
+            {loggedIn ? <Redirect to="/" /> : <Register onRegister={handleRegister} />}
           </Route>
 
           <Route exact path='/signin'>
-            <Login onLogin={handleLogin} />
+            {loggedIn ? <Redirect to="/" /> : <Login onLogin={handleLogin} />}
           </Route>
-
-          {/* <Route exact path='/loading'>
-            <Preloader />
-          </Route> */}
 
           <Route exact path='*'>
             <NotFound />
           </Route>
 
-
-
         </Switch>
-
-
       </div>
     </CurrentUserContext.Provider>
   );

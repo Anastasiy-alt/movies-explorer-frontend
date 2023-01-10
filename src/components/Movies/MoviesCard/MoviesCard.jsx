@@ -3,18 +3,14 @@ import { useLocation } from 'react-router-dom';
 
 
 function MoviesCard({ movie, onCardLike, handleMovieDelete, save }) {
-
-    const [saved, setSaved] = useState(false)
     const location = useLocation();
-
+console.dir(save)
     const handleSaveClick = () => {
         onCardLike(movie)
-        setSaved(true)
     };
 
     const handleRemoveSaveClick = () => {
         handleMovieDelete(movie)
-        setSaved(false)
     };
 
     function handleChangeMovieStatus() {
@@ -31,7 +27,7 @@ function MoviesCard({ movie, onCardLike, handleMovieDelete, save }) {
         return(`${hours}ч ${minutes}м`)
     }
 
-    const cardSaveButtonClassName = `button card__button ${save && 'card__button_click'} ${saved && 'card__button_click'}`
+    const cardSaveButtonClassName = `button card__button ${save && 'card__button_click'}`
 
     return (
         <article className='card'>
