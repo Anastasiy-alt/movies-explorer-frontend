@@ -97,8 +97,8 @@ const api = new Api({
     headers: {
         Accept: "application/json",
         'Content-Type': 'application/json',
-        // Origin: 'http://localhost:3000',
-        Origin: 'https://movies.anastasiya.nomoredomains.club',
+        Origin: 'http://localhost:3000',
+        // Origin: 'https://movies.anastasiya.nomoredomains.club',
         
     }
 });
