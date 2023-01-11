@@ -28,82 +28,28 @@ function App() {
   const [isloading, setIsLoading] = useState(false);
   const [movie, setMovie] = useState([]);
 
-  function handleLogin(email, password) {
-    console.log(email, password)
-    setIsLoading(true);
-    return auth
-      .authorize(email, password)
-      .then((data) => {
-        console.dir(data)
-        if (data.token) {
-          setLoggedIn(true)
-          localStorage.setItem('jwt', data.token);
-          history.push("/movies");
-          // tokenCheck();
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth
+        .checkToken(jwt)
+        .then((data) => {
           setCurrentUser(data);
-        }
-
-        // Promise.all([api.getUser(), api.getSavedMovies()])
-        //   .then(([userData, movieData]) => {
-        //     setCurrentUser(userData);
-        //     movieData.map((mov) => {
-        //       if (mov.owner === currentUser._id) {
-        //         setSavedMovies([...savedMovies, mov]);
-        //       }
-        //     })
-        //   })
-      })
-      .catch((err) => {
-        console.dir(err)
-        console.log(`Ошибка: ${err} ${err.message}`);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+          setLoggedIn(true);
+          history.push(location.pathname);
+        })
+        .catch((err) => console.log(err));
+    }
   }
-
-  function handleRegister(name, email, password) {
-    return auth
-      .register(name, email, password)
-      .then((user) => {
-        handleLogin(user)
-        console.dir(user)
-        setLoggedIn(true)
-        setCurrentUser(user);
-        history.push("/movies");
-      })
-      .catch((err) => {
-        console.dir(err)
-        console.log(`Ошибка: ${err} ${err.message}`);
-      })
-  }
-
-  const [savedMovies, setSavedMovies] = useState([]);
 
   useEffect(() => {
-    setIsLoading(true);
-    if (loggedIn) {
-      api.getSavedMovies()
-        .then((res) => {
-          res.map((mov) => {
-            if (mov.owner === currentUser._id) {
-              setSavedMovies([...savedMovies, mov]);
-            }
-          })
-        })
-        .catch((err) => {
-          console.log(`Ошибка: ${err}`);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-  }, [loggedIn])
+    tokenCheck()
+  }, [loggedIn]);
+
   useEffect(() => {
     if (loggedIn) {
       api.getUser()
         .then((userData) => {
-          console.dir(userData)
           setCurrentUser(userData);
         })
         .catch((err) => {
@@ -136,17 +82,16 @@ function App() {
     history.push('/');
     console.dir(currentUser)
     // api.logout()
-    //   .then(() => {
-    //     localStorage.clear();
+    //   .then((data) => {
     //     localStorage.removeItem('jwt');
     //     setLoggedIn(false);
     //     setCurrentUser({});
-    //     history.push('/');
+    //     history.push('/signup');
     //   })
     //   .catch((error) => {
     //     console.log(`Ошибка: ${error}`);
-    //     console.dir(error)
     //   })
+
   }
 
   const handleUpdateUser = ({ name, email }) => {
@@ -159,10 +104,57 @@ function App() {
       })
   };
 
+  function handleLogin(data) {
+    return auth
+      .authorize(data)
+      .then((data) => {
+        if (data) {
+          setLoggedIn(true)
+          localStorage.setItem('jwt', data.token);
+          history.push("/movies");
+          tokenCheck();
+        }
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+  }
+
+  function handleRegister(data) {
+    return auth
+      .register(data)
+      .then((user) => {
+        setLoggedIn(true)
+        setCurrentUser(user);
+        history.push("/movies");
+        handleLogin(user)
+      })
+      .catch((err) => {
+        console.log(`Ошибка: ${err}`);
+      })
+  }
+
+  const [savedMovies, setSavedMovies] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    if (loggedIn) {
+      api.getSavedMovies()
+        .then((res) => {
+          setSavedMovies(res);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [loggedIn])
+
   const handleSaveMovie = (mov) => {
     api.saveMovie(mov)
       .then((mov) => {
-        console.log(mov.data)
         setSavedMovies([...savedMovies, mov.data]);
       })
       .catch((err) => {
@@ -173,8 +165,6 @@ function App() {
 
   const handleMovieDelete = (movie) => {
     const saveMovie = savedMovies.find((mov) => mov.movieId === movie.id || mov.movieId === movie.movieId);
-    console.dir(movie)
-    console.dir(saveMovie)
     api.deleteSavedMovie(saveMovie._id)
       .then(() => {
         const newLSavedMoviesList = savedMovies.filter((mov) => {
@@ -190,28 +180,6 @@ function App() {
         console.log(`Ошибка: ${err} ${err.message}`);
       });
   }
-
-  const tokenCheck = () => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      auth
-        .checkToken()
-        .then((data) => {
-          setCurrentUser(data);
-          setLoggedIn(true);
-          history.push(location.pathname);
-        })
-        .catch((err) => {
-          handleSignOut()
-          console.log(err)
-        }
-        );
-    }
-  }
-
-  useEffect(() => {
-    tokenCheck()
-  }, [loggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -262,11 +230,16 @@ function App() {
             {loggedIn ? <Redirect to="/" /> : <Login onLogin={handleLogin} />}
           </Route>
 
+          {/* <Route exact path='/loading'>
+            <Preloader />
+          </Route> */}
+
           <Route exact path='*'>
             <NotFound />
           </Route>
 
         </Switch>
+
       </div>
     </CurrentUserContext.Provider>
   );

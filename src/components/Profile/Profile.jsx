@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useContext, useState } from 'react';
+import { Fragment, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../Header/header';
 import { CurrentUserContext } from '../../context/CurrentUserContext';
@@ -7,8 +7,8 @@ import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 function Profile({ onSignOut, onUpdateUser }) {
     const currentUser = useContext(CurrentUserContext);
     
-    const { values, handleChange, errors, resetForm, isValid } = useFormAndValidation();
-    // const [isEditProfile, setIsEditProfile] = useState(false);
+    const { values, handleChange, errors, resetForm } = useFormAndValidation();
+    const updateProfile = (!(currentUser.email === values.email) || !(currentUser.name === values.name))
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -18,11 +18,8 @@ function Profile({ onSignOut, onUpdateUser }) {
         });
     }
 
-    const updateProfile = (!(currentUser.email === values.email) || !(currentUser.name === values.name))
-
     useEffect(() => {
         if (currentUser) {
-            console.dir(currentUser)
           resetForm(currentUser, {}, true);
         }
       }, [currentUser, resetForm]);

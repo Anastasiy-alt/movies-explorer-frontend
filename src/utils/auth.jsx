@@ -2,7 +2,7 @@ import Api from './MainApi';
 // export const BASE_URL = 'https://api.movies.anastasiya.nomoredomains.club';
 export const BASE_URL = 'http://localhost:3001';
 
-export const register = ({ name, email, password }) => {
+export const register = (data) => {
     return fetch(`${BASE_URL}/signup`, {
         method: 'POST',
         headers: {
@@ -10,16 +10,16 @@ export const register = ({ name, email, password }) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: name,
-            password: password,
-            email: email,
+            name: data.name,
+            password: data.password,
+            email:data. email,
         }),
         credentials: 'include',
     })
         .then(Api._check)
 };
 
-export const authorize = ({email, password}) => {
+export const authorize = (data) => {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {
@@ -27,8 +27,8 @@ export const authorize = ({email, password}) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            password: password,
-            email: email,
+            password: data.password,
+            email: data.email,
         }),
         credentials: 'include'
     })
