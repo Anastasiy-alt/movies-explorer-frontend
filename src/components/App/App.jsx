@@ -33,8 +33,7 @@ function App() {
     if (jwt) {
       auth
         .checkToken(jwt)
-        .then((data) => {
-          setCurrentUser(data);
+        .then(() => {
           setLoggedIn(true);
           history.push(location.pathname);
         })
@@ -47,14 +46,30 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
+    if (!loggedIn) {
+      setCurrentUser({})
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
     if (loggedIn) {
       api.getUser()
         .then((userData) => {
           setCurrentUser(userData);
+          console.log('useEffect get user')
+          console.dir(currentUser)
+          console.log('userdata')
+          console.dir(userData)
         })
         .catch((err) => {
+          setCurrentUser({})
           console.log(`Ошибка: ${err}`);
         });
+    } else {
+      setIsLoading(false)
+      setCurrentUser({});
+      console.log('current user else')
+      console.dir(currentUser)
     }
   }, [loggedIn])
 
@@ -75,41 +90,52 @@ function App() {
   }, [loggedIn])
 
   const handleSignOut = () => {
-    localStorage.clear();
-    localStorage.removeItem('jwt');
-    setLoggedIn(false);
-    setCurrentUser({});
-    history.push('/');
-    console.dir(currentUser)
-    // api.logout()
-    //   .then((data) => {
-    //     localStorage.removeItem('jwt');
-    //     setLoggedIn(false);
-    //     setCurrentUser({});
-    //     history.push('/signup');
-    //   })
-    //   .catch((error) => {
-    //     console.log(`Ошибка: ${error}`);
-    //   })
-
+    // localStorage.clear();
+    // localStorage.removeItem('jwt');
+    // setLoggedIn(false);
+    // setCurrentUser({});
+    // history.push('/');
+    // console.log('handleSignOut')
+    // console.dir(currentUser)
+    return api.logout()
+      .then(() => {
+        localStorage.clear();
+        localStorage.removeItem('jwt');
+        localStorage.removeItem('token');
+        setLoggedIn(false);
+        history.push('/');
+        setCurrentUser({});
+        console.log('handleSignOut')
+        console.dir(loggedIn)
+      })
+      .catch((error) => {
+        console.log(`Ошибка: ${error}`);
+      });
   }
 
   const handleUpdateUser = ({ name, email }) => {
-    api.setUserInfo({ name, email })
+    if (loggedIn) {
+      return api.setUserInfo({ name, email })
       .then((data) => {
         setCurrentUser(data);
+        console.log('handleUpdateUser')
+        console.dir(currentUser)
+        console.log('data handleUpdateUser')
+        console.dir(data)
       })
       .catch((error) => {
         console.log(`Ошибка: ${error}`);
       })
+    }
   };
 
-  function handleLogin(data) {
+  function handleLogin(user) {
     return auth
-      .authorize(data)
+      .authorize(user)
       .then((data) => {
         if (data) {
           setLoggedIn(true)
+          // setCurrentUser(data);
           localStorage.setItem('jwt', data.token);
           history.push("/movies");
           tokenCheck();
@@ -121,13 +147,16 @@ function App() {
   }
 
   function handleRegister(data) {
+    console.dir(data)
     return auth
       .register(data)
       .then((user) => {
-        setLoggedIn(true)
-        setCurrentUser(user);
-        history.push("/movies");
+        console.log('user register')
+        console.dir(user)
+        // setLoggedIn(true)
+        // setCurrentUser(user);
         handleLogin(user)
+        history.push("/movies");
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
@@ -153,7 +182,7 @@ function App() {
   }, [loggedIn])
 
   const handleSaveMovie = (mov) => {
-    api.saveMovie(mov)
+    return api.saveMovie(mov)
       .then((mov) => {
         setSavedMovies([...savedMovies, mov.data]);
       })

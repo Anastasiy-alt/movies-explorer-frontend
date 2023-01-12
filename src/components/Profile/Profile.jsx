@@ -53,7 +53,7 @@ function Profile({ onSignOut, onUpdateUser }) {
                     <span className='profile__error'>{errors.email}</span>
                     <div className="profile__links">
                     <button className='profile__edit button' type='submit' disabled={!updateProfile}>Редактировать</button>
-                    <button className='profile__logout link button' onClick={onSignOut}>Выйти из аккаунта</button>
+                    <button className='profile__logout link button' type='button' onClick={onSignOut}>Выйти из аккаунта</button>
                 </div>
                 </form>        
             </div>
