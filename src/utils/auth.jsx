@@ -19,7 +19,7 @@ export const register = (data) => {
         .then(Api._check)
 };
 
-export const authorize = ({password, email}) => {
+export const authorize = (data) => {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {
@@ -27,8 +27,8 @@ export const authorize = ({password, email}) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            password: password,
-            email: email,
+            password: data.password,
+            email: data.email,
         }),
         credentials: 'include'
     })

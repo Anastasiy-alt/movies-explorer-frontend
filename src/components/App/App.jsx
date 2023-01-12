@@ -27,7 +27,6 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isloading, setIsLoading] = useState(false);
   const [movie, setMovie] = useState([]);
-  
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
@@ -123,9 +122,9 @@ function App() {
     }
   };
 
-  function handleLogin({password, email}) {
+  function handleLogin(data) {
     return auth
-      .authorize({password, email})
+      .authorize(data)
       .then((data) => {
         if (data.user) {
           console.log('login', data.user)
@@ -142,14 +141,11 @@ function App() {
   }
 
   function handleRegister(data) {
-    const password = data.password;
-    const email = data.email;
     return auth
       .register(data)
       .then((data) => {  
         setLoggedIn(true)
-        console.log({password, email})
-        handleLogin({password, email})
+        handleLogin(data)
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);
