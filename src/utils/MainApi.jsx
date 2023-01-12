@@ -92,13 +92,13 @@ class Api {
 }
 
 const api = new Api({
-    // baseUrl: 'https://api.movies.anastasiya.nomoredomains.club',
-    baseUrl: 'http://localhost:3001',
+    baseUrl: 'https://api.movies.anastasiya.nomoredomains.club',
+    // baseUrl: 'http://localhost:3001',
     headers: {
         Accept: "application/json",
         'Content-Type': 'application/json',
-        Origin: 'http://localhost:3000',
-        // Origin: 'https://movies.anastasiya.nomoredomains.club'
+        // Origin: 'http://localhost:3000',
+        Origin: 'https://movies.anastasiya.nomoredomains.club'
     }
 });
 
