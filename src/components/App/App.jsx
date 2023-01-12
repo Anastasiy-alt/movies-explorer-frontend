@@ -27,6 +27,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isloading, setIsLoading] = useState(false);
   const [movie, setMovie] = useState([]);
+  
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
@@ -56,10 +57,7 @@ function App() {
       api.getUser()
         .then((userData) => {
           setCurrentUser(userData);
-          console.log('useEffect get user')
-          console.dir(currentUser)
-          console.log('userdata')
-          console.dir(userData)
+          console.log(userData)
         })
         .catch((err) => {
           setCurrentUser({})
@@ -68,8 +66,6 @@ function App() {
     } else {
       setIsLoading(false)
       setCurrentUser({});
-      console.log('current user else')
-      console.dir(currentUser)
     }
   }, [loggedIn])
 
@@ -105,23 +101,21 @@ function App() {
         setLoggedIn(false);
         history.push('/');
         setCurrentUser({});
-        console.log('handleSignOut')
-        console.dir(loggedIn)
       })
       .catch((error) => {
         console.log(`Ошибка: ${error}`);
       });
   }
 
+  // useEffect(() => {
+  //   const now = new Date(); console.log(`${now.toString()} test === `); console.dir(currentUser)
+  //   }, [currentUser]);
+
   const handleUpdateUser = ({ name, email }) => {
     if (loggedIn) {
       return api.setUserInfo({ name, email })
       .then((data) => {
         setCurrentUser(data);
-        console.log('handleUpdateUser')
-        console.dir(currentUser)
-        console.log('data handleUpdateUser')
-        console.dir(data)
       })
       .catch((error) => {
         console.log(`Ошибка: ${error}`);
@@ -129,16 +123,17 @@ function App() {
     }
   };
 
-  function handleLogin(user) {
+  function handleLogin({password, email}) {
     return auth
-      .authorize(user)
+      .authorize({password, email})
       .then((data) => {
-        if (data) {
-          setLoggedIn(true)
-          // setCurrentUser(data);
+        if (data.user) {
+          console.log('login', data.user)
+          setCurrentUser(data.user);
           localStorage.setItem('jwt', data.token);
           history.push("/movies");
           tokenCheck();
+          setLoggedIn(true)
         }
       })
       .catch((err) => {
@@ -147,16 +142,14 @@ function App() {
   }
 
   function handleRegister(data) {
-    console.dir(data)
+    const password = data.password;
+    const email = data.email;
     return auth
       .register(data)
-      .then((user) => {
-        console.log('user register')
-        console.dir(user)
-        // setLoggedIn(true)
-        // setCurrentUser(user);
-        handleLogin(user)
-        history.push("/movies");
+      .then((data) => {  
+        setLoggedIn(true)
+        console.log({password, email})
+        handleLogin({password, email})
       })
       .catch((err) => {
         console.log(`Ошибка: ${err}`);

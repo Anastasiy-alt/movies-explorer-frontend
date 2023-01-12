@@ -12,14 +12,14 @@ export const register = (data) => {
         body: JSON.stringify({
             name: data.name,
             password: data.password,
-            email:data. email,
+            email: data. email,
         }),
         credentials: 'include',
     })
         .then(Api._check)
 };
 
-export const authorize = (data) => {
+export const authorize = ({password, email}) => {
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {
@@ -27,8 +27,8 @@ export const authorize = (data) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            password: data.password,
-            email: data.email,
+            password: password,
+            email: email,
         }),
         credentials: 'include'
     })
