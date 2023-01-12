@@ -1,44 +1,87 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
-import one from '../../../images/1.webp'
-import two from '../../../images/2.webp'
-import three from '../../../images/3.webp'
-import four from '../../../images/4.webp'
-import five from '../../../images/5.webp'
-import six from '../../../images/6.webp'
+import More
+    from "../More/More";
+import { useLocation } from 'react-router-dom';
+import useScreenWidth from '../../../hooks/useScreenWidth';
+import { useState, useEffect, Fragment } from "react";
 
-function MoviesCardList() {
+function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFilter }) {
+
+    const location = useLocation();
+    const screenWidth = useScreenWidth();
+    const [loadingMov, setLoadingMov] = useState(0);
+    const [showMov, setShowMov] = useState(0);
+    const [moviesListShow, setMoviesListShow] = useState([]);
+    const [moviesSaveList, setMoviesSaveList] = useState([]);
+
+    useEffect(() => {
+        if (movies.length) {
+            const result = movies.filter((item, index) => index < showMov)
+            setMoviesListShow(result)
+        }
+    }, [movies, showMov])
+
+    useEffect(() => {
+        if (screenWidth <= 625) {
+            setShowMov(5);
+            setLoadingMov(2);
+        } else if (screenWidth <= 768 && screenWidth > 625) {
+            setShowMov(8);
+            setLoadingMov(2);
+        } else if (screenWidth > 768) {
+            setShowMov(12);
+            setLoadingMov(3);
+        }
+    }, [screenWidth]);
+
+    const handleShowMoreMovies = () => {
+        setMoviesListShow(movies.slice(0, moviesListShow.length + loadingMov))
+    };
+
+    useEffect(() => {
+        if ((location.pathname === '/saved-movies') === true) {
+            setMoviesSaveList(saveMovie)
+        }
+    }, [saveMovie, location.pathname])
+
+    function getSavedMoviesFun(movieList, movie) {
+        return movieList.find((mov) => {
+            return mov.owner === movie.owner;
+            // return mov.movieId === (movie.id || movie.movieId);
+        });
+    }
+
+    const shortMovies = movies.filter(movie => movie.duration < 40)
+    const shortSaveMovies = saveMovie.filter(movie => movie.duration < 40)
+    const moviesShortcheck = moviesFilter ? shortMovies : moviesListShow
+    const moviesShortcheckForSaved = moviesFilter ? shortSaveMovies : moviesSaveList
+
     return (
-        <section className='cardlist'>
-            <MoviesCard 
-                title='Девять'
-                time='1ч 20м'
-                poster={six} />
+        <Fragment>
+            <section className='cardlist'>
+                {!(location.pathname === '/saved-movies') ? moviesShortcheck.map((movie) => (
 
-            <MoviesCard 
-                title='Тачки'
-                time='1ч 20м'
-                poster={five} />
+                    <MoviesCard movie={movie}
+                        key={movie._id || movie.id}
+                        save={getSavedMoviesFun(saveMovie, movie)}
+                        onCardLike={button}
+                        handleMovieDelete={handleMovieDelete}
+                    />
+                ))
+                    :
+                    moviesShortcheckForSaved?.map((movie) => (
+                        <MoviesCard movie={movie}
+                            key={movie._id || movie.id}
+                            save={saveMovie}
+                            onCardLike={button}
+                            handleMovieDelete={handleMovieDelete}
+                        />))
+                }
 
-            <MoviesCard 
-                title='Ранго'
-                time='1ч 20м'
-                poster={four} />
 
-            <MoviesCard
-                title='Человек-паук: через вселенные'
-                time='1ч 20м'
-                poster={three} />
-
-            <MoviesCard
-                title='Валл-и'
-                time='1ч 20м'
-                poster={two} />
-
-            <MoviesCard
-                title='Рататуй'
-                time='1ч 20м'
-                poster={one} />
-        </section>
+            </section>
+            {location.pathname === '/movies' && ((moviesShortcheck.length < (moviesFilter ? shortMovies.length : movies.length)) && (<More onClick={handleShowMoreMovies} />))}
+        </Fragment>
     )
 }
 

@@ -60,6 +60,20 @@
     margin-left: 12px;
 }
 
+.rotate {
+    animation: loading 7s linear infinite;
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 @media screen and (max-width: 1280px) {
     .logo-btn {
         margin-left: calc(0.05469 * 100vw);
