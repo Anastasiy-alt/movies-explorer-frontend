@@ -27,6 +27,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isloading, setIsLoading] = useState(false);
   const [movie, setMovie] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
@@ -56,15 +57,12 @@ function App() {
       api.getUser()
         .then((userData) => {
           setCurrentUser(userData);
-          console.log(userData)
+          console.dir(userData)
         })
         .catch((err) => {
           setCurrentUser({})
           console.log(`Ошибка: ${err}`);
         });
-    } else {
-      setIsLoading(false)
-      setCurrentUser({});
     }
   }, [loggedIn])
 
@@ -85,13 +83,6 @@ function App() {
   }, [loggedIn])
 
   const handleSignOut = () => {
-    // localStorage.clear();
-    // localStorage.removeItem('jwt');
-    // setLoggedIn(false);
-    // setCurrentUser({});
-    // history.push('/');
-    // console.log('handleSignOut')
-    // console.dir(currentUser)
     return api.logout()
       .then(() => {
         localStorage.clear();
@@ -152,7 +143,7 @@ function App() {
       })
   }
 
-  const [savedMovies, setSavedMovies] = useState([]);
+
 
   useEffect(() => {
     setIsLoading(true);

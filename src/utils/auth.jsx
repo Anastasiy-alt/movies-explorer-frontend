@@ -12,7 +12,7 @@ export const register = (data) => {
         body: JSON.stringify({
             name: data.name,
             password: data.password,
-            email: data. email,
+            email: data.email,
         }),
         credentials: 'include',
     })
