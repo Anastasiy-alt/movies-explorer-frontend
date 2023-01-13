@@ -46,8 +46,8 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
 
     function getSavedMoviesFun(movieList, movie) {
         return movieList.find((mov) => {
-            return mov.owner === movie.owner;
-            // return mov.movieId === (movie.id || movie.movieId);
+            // return mov.owner === movie.owner;
+            return mov.movieId === (movie.id || movie.movieId);
         });
     }
 

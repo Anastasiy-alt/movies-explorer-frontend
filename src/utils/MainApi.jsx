@@ -16,10 +16,14 @@ class Api {
             })
     }
 
-    getUser() {
+    getUser(jwt) {
         return fetch(`${this._baseUrl}/users/me`, {
             credentials: 'include',
-            headers: this._headers,
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': 'application/json',
+                'authorization': `Bearer ${jwt}`,
+            },
             method: 'GET'
         })
             .then(res => this._check(res))
@@ -92,13 +96,12 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'https://api.movies.anastasiya.nomoredomains.club',
-    // baseUrl: 'http://localhost:3001',
+    // baseUrl: 'https://api.movies.anastasiya.nomoredomains.club',
+    baseUrl: 'http://localhost:3001',
     headers: {
-        Accept: "application/json",
+        'Accept': "application/json",
         'Content-Type': 'application/json',
-        // Origin: 'http://localhost:3000',
-        Origin: 'https://movies.anastasiya.nomoredomains.club'
+        'authorization': `Bearer ${localStorage.getItem('jwt')}`,
     }
 });
 

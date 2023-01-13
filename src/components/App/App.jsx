@@ -53,8 +53,10 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
+    const jwt = localStorage.getItem('jwt')
+    console.log(jwt)
     if (loggedIn) {
-      api.getUser()
+      api.getUser(jwt)
         .then((userData) => {
           setCurrentUser(userData);
           console.dir(userData)
@@ -62,6 +64,7 @@ function App() {
         .catch((err) => {
           setCurrentUser({})
           console.log(`Ошибка: ${err}`);
+          console.dir(err)
         });
     }
   }, [loggedIn])
@@ -97,9 +100,9 @@ function App() {
       });
   }
 
-  // useEffect(() => {
-  //   const now = new Date(); console.log(`${now.toString()} test === `); console.dir(currentUser)
-  //   }, [currentUser]);
+  useEffect(() => {
+    const now = new Date(); console.log(`${now.toString()} test === `); console.dir(currentUser)
+    }, [currentUser]);
 
   const handleUpdateUser = ({ name, email }) => {
     if (loggedIn) {
@@ -118,12 +121,12 @@ function App() {
       .authorize(data)
       .then((data) => {
         if (data.user) {
-          console.log('login', data.user)
+          console.log('login', data)
           setCurrentUser(data.user);
           localStorage.setItem('jwt', data.token);
+          setLoggedIn(true)
           history.push("/movies");
           tokenCheck();
-          setLoggedIn(true)
         }
       })
       .catch((err) => {
