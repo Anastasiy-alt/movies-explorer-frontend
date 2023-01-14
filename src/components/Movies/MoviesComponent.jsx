@@ -21,6 +21,7 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
     const [moviesFilter, setMoviesFilter] = useState(false);
     const [searchLength, setSearchLength] = useState(false);
     const [searchLengthSave, setSearchLengthSave] = useState(false);
+    const [submit, setSubmit] = useState(false)
 
 
     const filterMoviesAll = (mov) => {
@@ -52,10 +53,11 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
             setFilterSaveMovies(saveMovie)
         } else {
             setSearchLengthSave(false)
+            setSubmittedSave(true)
         }
         setFilterSaveMovies(searchMovSave)
-        setSubmittedSave(true)
-        localStorage.setItem('allIsSubmitted', true)
+
+        localStorage.setItem('saveIsSubmitted', true)
     }
 
     const handleChangeInputValueAll = (value) => {
@@ -87,6 +89,15 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
         })
     }
 
+    const onClick = () => {
+        if (keywordSave === '') {
+            setSubmit(true)
+        } else {
+            setSubmit(false)
+        }
+        console.log(submit)
+    }
+
     return (
         <Fragment>
             <Header
@@ -98,16 +109,18 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
                     moviesFilter={moviesFilter}
                     onFilter={onFilter}
                     keyword={keywordAll}
-                    onSearchChange={handleChangeInputValueAll} />
+                    onSearchChange={handleChangeInputValueAll}
+                    onClick={onClick} />
                 :
                 <SearchForm
                     onSubmit={handleSearchSave}
                     moviesFilter={moviesFilter}
                     onFilter={onFilter}
                     keyword={keywordSave}
-                    onSearchChange={handleChangeInputValueSave} />}
+                    onSearchChange={handleChangeInputValueSave}
+                    onClick={onClick} />}
             {!isloading ? ((location.pathname === '/movies') ?
-                ((!searchLength ? (
+                (((!searchLength) ? (
                     <MoviesCardList
                         button={button}
                         movies={submittedAll ? filterAllMovies : []}
@@ -117,18 +130,35 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
                         moviesFilter={moviesFilter} />
                 ) : (
                     <span>Ничего не найдено</span>
-                ))) : 
-                ((!searchLengthSave ? (
-                    <MoviesCardList
+                ))) : (submit ? (<MoviesCardList
+                button={button}
+                movies={submittedAll ? filterAllMovies : []}
+                saveMovie={saveMovie}
+                loggedIn={loggedIn}
+                handleMovieDelete={handleMovieDelete}
+                moviesFilter={moviesFilter} />) :
+
+                ((!searchLengthSave ?
+                    (<MoviesCardList
                         button={button}
                         movies={submittedAll ? filterAllMovies : []}
                         saveMovie={submittedSave ? filterSaveMovies : saveMovie}
                         loggedIn={loggedIn}
                         handleMovieDelete={handleMovieDelete}
-                        moviesFilter={moviesFilter} />
-                ) : (
+                        moviesFilter={moviesFilter} />)
+                       
+                 : (
+                    <>
                     <span>Ничего не найдено</span>
-                )))
+                    <MoviesCardList
+                        button={button}
+                        movies={submittedAll ? filterAllMovies : []}
+                        saveMovie={saveMovie}
+                        loggedIn={loggedIn}
+                        handleMovieDelete={handleMovieDelete}
+                        moviesFilter={moviesFilter} />
+                    </>
+                ))))
                 // (
                 //     ((searchLengthSave) ? (
                 //         <>

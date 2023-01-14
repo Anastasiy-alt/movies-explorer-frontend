@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useLocation } from 'react-router-dom';
 import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
 
-function SearchForm({ onFilter, moviesFilter, keyword, onSearchChange, onSubmit }) {
+function SearchForm({ onFilter, moviesFilter, keyword, onSearchChange, onSubmit, onClick }) {
 
     const [isFormValid, setIsFormValid] = useState(false);
     const [errorText, setErrorText] = useState('');
@@ -37,7 +37,7 @@ function SearchForm({ onFilter, moviesFilter, keyword, onSearchChange, onSubmit 
                     onChange={handleChange}
                     required />
 
-                <button type="submit" className="button search__button" disabled={!isValid}></button>
+                <button type="submit" className="button search__button" onClick={onClick}></button>
             </form>
             <Toggle onFilter={onFilter} moviesFilter={moviesFilter} />
             <span className="search__error">

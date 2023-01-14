@@ -54,12 +54,10 @@ function App() {
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt')
-    console.log(jwt)
     if (loggedIn) {
       api.getUser(jwt)
         .then((userData) => {
           setCurrentUser(userData);
-          console.dir(userData)
         })
         .catch((err) => {
           setCurrentUser({})

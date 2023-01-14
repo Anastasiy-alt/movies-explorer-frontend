@@ -58,7 +58,6 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
     const moviesShortcheckForSaved = moviesFilter ? shortSaveMovies : moviesSaveList
 
     useEffect(() => {
-        console.log('filter', moviesFilter)
         if (moviesFilter === true) {
             if (location.pathname === '/movies') {
                 if (moviesShortcheck.length === 0) {
@@ -68,10 +67,8 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
                 } }
                 if (location.pathname === '/saved-movies') {
                     if (moviesShortcheckForSaved.length === 0) {
-                        console.log('not', notMov)
                         setNotMov(true)
                     } else {
-                        console.log('not', notMov)
                         setNotMov(false)
                     }
                 
@@ -79,7 +76,6 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
         } else {
             setNotMov(false)
         }
-        console.log('not', notMov)
     }, [location.pathname, moviesFilter, moviesShortcheck.length, moviesShortcheckForSaved.length, notMov])
 
     return (
