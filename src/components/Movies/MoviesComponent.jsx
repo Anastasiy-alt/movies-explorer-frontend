@@ -18,10 +18,11 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
 
     const [filterAllMovies, setFilterAllMovies] = useState(movies);
     const [filterSaveMovies, setFilterSaveMovies] = useState(saveMovie);
-    const [moviesFilter, setMoviesFilter] = useState(false);
+    const [moviesFilterAll, setMoviesFilterAll] = useState(false);
+    const [moviesFilterSave, setMoviesFilterSave] = useState(false);
     const [searchLength, setSearchLength] = useState(false);
     const [searchLengthSave, setSearchLengthSave] = useState(false);
-    const [submit, setSubmit] = useState(false)
+    const [submit, setSubmit] = useState(true)
 
 
     const filterMoviesAll = (mov) => {
@@ -74,7 +75,7 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
         const filterValue = localStorage.getItem('savedMovies') === 'true' ? true : false
         const searchValue = localStorage.getItem('allSearchValue')
         const searchValueSave = localStorage.getItem('saveSearchValue')
-        setMoviesFilter(filterValue)
+        setMoviesFilterAll(filterValue)
 
         setKeywordAll(searchValue)
         setKeywordSave(searchValueSave)
@@ -82,8 +83,15 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
         setFilterAllMovies(filterMoviesAll(movies))
     }, [])
 
-    const onFilter = () => {
-        setMoviesFilter((movFilter) => {
+    const onFilterAll = () => {
+        setMoviesFilterAll((movFilter) => {
+            localStorage.setItem('savedMovies', JSON.stringify(!movFilter));
+            return !movFilter
+        })
+    }
+
+    const onFilterSave = () => {
+        setMoviesFilterSave((movFilter) => {
             localStorage.setItem('savedMovies', JSON.stringify(!movFilter));
             return !movFilter
         })
@@ -95,7 +103,6 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
         } else {
             setSubmit(false)
         }
-        console.log(submit)
     }
 
     return (
@@ -106,16 +113,16 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
             {(location.pathname === '/movies') ?
                 <SearchForm
                     onSubmit={handleSearch}
-                    moviesFilter={moviesFilter}
-                    onFilter={onFilter}
+                    moviesFilter={moviesFilterAll}
+                    onFilter={onFilterAll}
                     keyword={keywordAll}
                     onSearchChange={handleChangeInputValueAll}
                     onClick={onClick} />
                 :
                 <SearchForm
                     onSubmit={handleSearchSave}
-                    moviesFilter={moviesFilter}
-                    onFilter={onFilter}
+                    moviesFilter={moviesFilterSave}
+                    onFilter={onFilterSave}
                     keyword={keywordSave}
                     onSearchChange={handleChangeInputValueSave}
                     onClick={onClick} />}
@@ -127,7 +134,7 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
                         saveMovie={submittedSave ? filterSaveMovies : saveMovie}
                         loggedIn={loggedIn}
                         handleMovieDelete={handleMovieDelete}
-                        moviesFilter={moviesFilter} />
+                        moviesFilter={moviesFilterAll} />
                 ) : (
                     <span>Ничего не найдено</span>
                 ))) : (submit ? (<MoviesCardList
@@ -136,7 +143,7 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
                 saveMovie={saveMovie}
                 loggedIn={loggedIn}
                 handleMovieDelete={handleMovieDelete}
-                moviesFilter={moviesFilter} />) :
+                moviesFilter={moviesFilterSave} />) :
 
                 ((!searchLengthSave ?
                     (<MoviesCardList
@@ -145,7 +152,7 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
                         saveMovie={submittedSave ? filterSaveMovies : saveMovie}
                         loggedIn={loggedIn}
                         handleMovieDelete={handleMovieDelete}
-                        moviesFilter={moviesFilter} />)
+                        moviesFilter={moviesFilterSave} />)
                        
                  : (
                     <>
@@ -156,7 +163,7 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
                         saveMovie={saveMovie}
                         loggedIn={loggedIn}
                         handleMovieDelete={handleMovieDelete}
-                        moviesFilter={moviesFilter} />
+                        moviesFilter={moviesFilterSave} />
                     </>
                 ))))
                 // (

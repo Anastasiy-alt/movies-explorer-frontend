@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 function MoviesCard({ movie, onCardLike, handleMovieDelete, save }) {
 
-    const [saved, setSaved] = useState(false)
+    const [saved, setSaved] = useState()
     const location = useLocation();
 
     const handleSaveClick = () => {
@@ -16,7 +16,7 @@ function MoviesCard({ movie, onCardLike, handleMovieDelete, save }) {
         handleMovieDelete(movie)
         setSaved(false)
     };
-
+console.log(save)
     function handleChangeMovieStatus() {
         if (((location.pathname === '/movies') && save) || (!(location.pathname === '/movies') && save)) {
             handleRemoveSaveClick()
@@ -30,8 +30,8 @@ function MoviesCard({ movie, onCardLike, handleMovieDelete, save }) {
         let minutes = duration % 60;
         return(`${hours}ч ${minutes}м`)
     }
-
-    const cardSaveButtonClassName = `button card__button ${save && 'card__button_click'} ${saved && 'card__button_click'}`
+ 
+   const cardSaveButtonClassName = `button card__button ${save && 'card__button_click'}`
 
     return (
         <article className='card'>
@@ -44,7 +44,7 @@ function MoviesCard({ movie, onCardLike, handleMovieDelete, save }) {
                 </>
                 :
                 <>
-                    <button className={cardSaveButtonClassName} type="button" onClick={handleChangeMovieStatus}></button>
+                    <button className={cardSaveButtonClassName} type="button" onClick={handleChangeMovieStatus} disabled={saved}></button>
                     <img src={`https://api.nomoreparties.co${movie.image.url}`} alt={movie.nameRU} className='card__img' />
                 </>
             }

@@ -42,10 +42,14 @@ class Api {
             .then(res => this._check(res))
     }
 
-    getSavedMovies() {
+    getSavedMovies(jwt) {
         return fetch(`${this._baseUrl}/movies`, {
             credentials: 'include',
-            headers: this._headers,
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': 'application/json',
+                'authorization': `Bearer ${jwt}`,
+            },
             method: 'GET'
         })
             .then(res => this._check(res))

@@ -23,7 +23,7 @@ function App() {
   const history = useHistory();
   const location = useLocation();
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem('jwt'));
   const [currentUser, setCurrentUser] = useState({});
   const [isloading, setIsLoading] = useState(false);
   const [movie, setMovie] = useState([]);
@@ -54,6 +54,7 @@ function App() {
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt')
+    if (jwt) {
     if (loggedIn) {
       api.getUser(jwt)
         .then((userData) => {
@@ -64,7 +65,7 @@ function App() {
           console.log(`Ошибка: ${err}`);
           console.dir(err)
         });
-    }
+    }}
   }, [loggedIn])
 
   useEffect(() => {
@@ -119,12 +120,12 @@ function App() {
       .authorize(data)
       .then((data) => {
         if (data.user) {
-          console.log('login', data)
+          console.log(data.user)
           setCurrentUser(data.user);
           localStorage.setItem('jwt', data.token);
           setLoggedIn(true)
-          history.push("/movies");
-          tokenCheck();
+          // tokenCheck();
+          history.push('/movies');
         }
       })
       .catch((err) => {
@@ -144,12 +145,12 @@ function App() {
       })
   }
 
-
-
   useEffect(() => {
     setIsLoading(true);
+    const jwt = localStorage.getItem('jwt')
+    if (jwt) {
     if (loggedIn) {
-      api.getSavedMovies()
+      api.getSavedMovies(jwt)
         .then((res) => {
           setSavedMovies(res);
         })
@@ -159,7 +160,7 @@ function App() {
         .finally(() => {
           setIsLoading(false);
         });
-    }
+    }}
   }, [loggedIn])
 
   const handleSaveMovie = (mov) => {

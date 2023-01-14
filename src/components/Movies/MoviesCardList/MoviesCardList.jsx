@@ -47,7 +47,8 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
 
     function getSavedMoviesFun(movieList, movie) {
         return movieList.find((mov) => {
-            //return mov.owner === movie.owner;
+            // console.dir(movieList)
+            // return mov.owner === movie.owner;
             return mov.movieId === (movie.id || movie.movieId);
         });
     }
@@ -70,8 +71,7 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
                         setNotMov(true)
                     } else {
                         setNotMov(false)
-                    }
-                
+                    }  
             }
         } else {
             setNotMov(false)
@@ -86,6 +86,7 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
                         <MoviesCard movie={movie}
                             key={movie._id || movie.id}
                             save={getSavedMoviesFun(saveMovie, movie)}
+                            // save={saveMovie}
                             onCardLike={button}
                             handleMovieDelete={handleMovieDelete}
                         />
