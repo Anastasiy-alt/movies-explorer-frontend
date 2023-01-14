@@ -13,6 +13,7 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
     const [showMov, setShowMov] = useState(0);
     const [moviesListShow, setMoviesListShow] = useState([]);
     const [moviesSaveList, setMoviesSaveList] = useState([]);
+    const [notMov, setNotMov] = useState(false)
 
     useEffect(() => {
         if (movies.length) {
@@ -46,7 +47,7 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
 
     function getSavedMoviesFun(movieList, movie) {
         return movieList.find((mov) => {
-            // return mov.owner === movie.owner;
+            //return mov.owner === movie.owner;
             return mov.movieId === (movie.id || movie.movieId);
         });
     }
@@ -56,30 +57,53 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
     const moviesShortcheck = moviesFilter ? shortMovies : moviesListShow
     const moviesShortcheckForSaved = moviesFilter ? shortSaveMovies : moviesSaveList
 
+    useEffect(() => {
+        console.log('filter', moviesFilter)
+        if (moviesFilter === true) {
+            if (location.pathname === '/movies') {
+                if (moviesShortcheck.length === 0) {
+                    setNotMov(true)
+                } else {
+                    setNotMov(false)
+                } }
+                if (location.pathname === '/saved-movies') {
+                    if (moviesShortcheckForSaved.length === 0) {
+                        console.log('not', notMov)
+                        setNotMov(true)
+                    } else {
+                        console.log('not', notMov)
+                        setNotMov(false)
+                    }
+                
+            }
+        } else {
+            setNotMov(false)
+        }
+        console.log('not', notMov)
+    }, [location.pathname, moviesFilter, moviesShortcheck.length, moviesShortcheckForSaved.length, notMov])
+
     return (
         <Fragment>
-            <section className='cardlist'>
-                {!(location.pathname === '/saved-movies') ? moviesShortcheck.map((movie) => (
-
-                    <MoviesCard movie={movie}
-                        key={movie._id || movie.id}
-                        save={getSavedMoviesFun(saveMovie, movie)}
-                        onCardLike={button}
-                        handleMovieDelete={handleMovieDelete}
-                    />
-                ))
-                    :
-                    moviesShortcheckForSaved?.map((movie) => (
+            {(notMov) ? (<span>Ничего не найдено</span>) : (
+                <section className='cardlist'>
+                    {(location.pathname === '/movies') ? moviesShortcheck.map((movie) => (
                         <MoviesCard movie={movie}
                             key={movie._id || movie.id}
-                            save={saveMovie}
+                            save={getSavedMoviesFun(saveMovie, movie)}
                             onCardLike={button}
                             handleMovieDelete={handleMovieDelete}
-                        />))
-                }
-
-
-            </section>
+                        />
+                    ))
+                        :
+                        moviesShortcheckForSaved.map((movie) => (
+                            <MoviesCard movie={movie}
+                                key={movie._id || movie.id}
+                                save={saveMovie}
+                                onCardLike={button}
+                                handleMovieDelete={handleMovieDelete}
+                            />))}
+                </section>
+            )}
             {location.pathname === '/movies' && ((moviesShortcheck.length < (moviesFilter ? shortMovies.length : movies.length)) && (<More onClick={handleShowMoreMovies} />))}
         </Fragment>
     )

@@ -100,9 +100,9 @@ function App() {
       });
   }
 
-  useEffect(() => {
-    const now = new Date(); console.log(`${now.toString()} test === `); console.dir(currentUser)
-    }, [currentUser]);
+  // useEffect(() => {
+  //   const now = new Date(); console.log(`${now.toString()} test === `); console.dir(currentUser)
+  //   }, [currentUser]);
 
   const handleUpdateUser = ({ name, email }) => {
     if (loggedIn) {

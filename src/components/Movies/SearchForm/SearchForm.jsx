@@ -1,12 +1,14 @@
 import Toggle from "../Toggle/Toggle";
 import { useState } from "react";
 import { useLocation } from 'react-router-dom';
+import { useFormAndValidation } from '../../../hooks/useFormAndValidation';
 
-function SearchForm({ onFilter, moviesFilter, keyword, onSeachChange, onSubmit }) {
+function SearchForm({ onFilter, moviesFilter, keyword, onSearchChange, onSubmit }) {
 
     const [isFormValid, setIsFormValid] = useState(false);
     const [errorText, setErrorText] = useState('');
     const location = useLocation();
+    const { isValid } = useFormAndValidation();
 
 
     const handleSavedMoviesFormSubmit = (e) => {
@@ -20,7 +22,7 @@ function SearchForm({ onFilter, moviesFilter, keyword, onSeachChange, onSubmit }
 
     const handleChange = (e) => {
         setIsFormValid(e.target.closest('form').checkValidity());
-        onSeachChange(e.target.value);
+        onSearchChange(e.target.value);
     }
 
     return (
@@ -35,7 +37,7 @@ function SearchForm({ onFilter, moviesFilter, keyword, onSeachChange, onSubmit }
                     onChange={handleChange}
                     required />
 
-                <button type="submit" className="button search__button"></button>
+                <button type="submit" className="button search__button" disabled={!isValid}></button>
             </form>
             <Toggle onFilter={onFilter} moviesFilter={moviesFilter} />
             <span className="search__error">

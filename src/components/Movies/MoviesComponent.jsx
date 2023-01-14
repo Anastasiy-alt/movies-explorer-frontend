@@ -23,12 +23,16 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
     const [searchLengthSave, setSearchLengthSave] = useState(false);
 
 
-    const filterMovies = (mov) => {
+    const filterMoviesAll = (mov) => {
         return mov.filter(movie => movie.nameRU.toLowerCase().includes(keywordAll.toLowerCase()))
     }
 
+    const filterMoviesSave = (mov) => {
+        return mov.filter(movie => movie.nameRU.toLowerCase().includes(keywordSave.toLowerCase()))
+    }
+
     const handleSearch = () => {
-        const searchMovies = filterMovies(movies)
+        const searchMovies = filterMoviesAll(movies)
         const searchMovAll = keywordAll ? searchMovies : movies
         if (searchMovAll.length === 0) {
             setSearchLength(true)
@@ -41,7 +45,7 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
     }
 
     const handleSearchSave = () => {
-        const searcSaveMovies = filterMovies(saveMovie)
+        const searcSaveMovies = filterMoviesSave(saveMovie)
         const searchMovSave = keywordSave ? searcSaveMovies : saveMovie
         if (searchMovSave.length === 0) {
             setSearchLengthSave(true)
@@ -69,11 +73,11 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
         const searchValue = localStorage.getItem('allSearchValue')
         const searchValueSave = localStorage.getItem('saveSearchValue')
         setMoviesFilter(filterValue)
-        
+
         setKeywordAll(searchValue)
         setKeywordSave(searchValueSave)
-        setFilterSaveMovies(filterMovies(saveMovie))
-        setFilterAllMovies(filterMovies(movies))
+        setFilterSaveMovies(filterMoviesSave(saveMovie))
+        setFilterAllMovies(filterMoviesAll(movies))
     }, [])
 
     const onFilter = () => {
@@ -94,14 +98,14 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
                     moviesFilter={moviesFilter}
                     onFilter={onFilter}
                     keyword={keywordAll}
-                    onSeachChange={handleChangeInputValueAll} />
+                    onSearchChange={handleChangeInputValueAll} />
                 :
                 <SearchForm
                     onSubmit={handleSearchSave}
                     moviesFilter={moviesFilter}
                     onFilter={onFilter}
                     keyword={keywordSave}
-                    onSeachChange={handleChangeInputValueSave} />}
+                    onSearchChange={handleChangeInputValueSave} />}
             {!isloading ? ((location.pathname === '/movies') ?
                 ((!searchLength ? (
                     <MoviesCardList
@@ -113,28 +117,41 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
                         moviesFilter={moviesFilter} />
                 ) : (
                     <span>Ничего не найдено</span>
-                ))) : (
-                    ((searchLengthSave || keywordAll === '') ? (
-                        <>
-                            {!(keywordAll === '') && (<span>Ничего не найдено</span>)}
-                            <MoviesCardList
-                                button={button}
-                                movies={submittedAll ? filterAllMovies : []}
-                                saveMovie={saveMovie}
-                                loggedIn={loggedIn}
-                                handleMovieDelete={handleMovieDelete}
-                                moviesFilter={moviesFilter} />
-                        </>
-                    ) : (
-                        <MoviesCardList
-                            button={button}
-                            movies={submittedAll ? filterAllMovies : []}
-                            saveMovie={submittedSave ? filterSaveMovies : saveMovie}
-                            loggedIn={loggedIn}
-                            handleMovieDelete={handleMovieDelete}
-                            moviesFilter={moviesFilter} />
-                    ))
-                )) : (<Preloader />)}
+                ))) : 
+                ((!searchLengthSave ? (
+                    <MoviesCardList
+                        button={button}
+                        movies={submittedAll ? filterAllMovies : []}
+                        saveMovie={submittedSave ? filterSaveMovies : saveMovie}
+                        loggedIn={loggedIn}
+                        handleMovieDelete={handleMovieDelete}
+                        moviesFilter={moviesFilter} />
+                ) : (
+                    <span>Ничего не найдено</span>
+                )))
+                // (
+                //     ((searchLengthSave) ? (
+                //         <>
+                //             <MoviesCardList
+                //                 button={button}
+                //                 movies={[]}
+                //                 saveMovie={saveMovie}
+                //                 loggedIn={loggedIn}
+                //                 handleMovieDelete={handleMovieDelete}
+                //                 moviesFilter={moviesFilter} />
+                //         </>
+                //     ) : (
+                //         <MoviesCardList
+                //             button={button}
+                //             movies={submittedAll ? filterAllMovies : []}
+                //             // saveMovie={submittedSave ? filterSaveMovies : saveMovie}
+                //             saveMovie={submittedSave && ((keywordSave === '') ? saveMovie : (filterSaveMovies))}
+                //             loggedIn={loggedIn}
+                //             handleMovieDelete={handleMovieDelete}
+                //             moviesFilter={moviesFilter} />
+                //     ))
+                // )
+                ) : (<Preloader />)}
             <Footer movies='true' />
         </Fragment>
     )
