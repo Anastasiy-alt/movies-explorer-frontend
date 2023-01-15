@@ -100,8 +100,8 @@ class Api {
 }
 
 const api = new Api({
-    // baseUrl: 'https://api.movies.anastasiya.nomoredomains.club',
-    baseUrl: 'http://localhost:3001',
+    baseUrl: 'https://api.movies.anastasiya.nomoredomains.club',
+    // baseUrl: 'http://localhost:3001',
     headers: {
         'Accept': "application/json",
         'Content-Type': 'application/json',
