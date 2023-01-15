@@ -16,7 +16,7 @@ function MoviesCard({ movie, onCardLike, handleMovieDelete, save }) {
         handleMovieDelete(movie)
         setSaved(false)
     };
-console.log(save)
+
     function handleChangeMovieStatus() {
         if (((location.pathname === '/movies') && save) || (!(location.pathname === '/movies') && save)) {
             handleRemoveSaveClick()

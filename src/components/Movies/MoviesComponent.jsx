@@ -18,8 +18,10 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
 
     const [filterAllMovies, setFilterAllMovies] = useState(movies);
     const [filterSaveMovies, setFilterSaveMovies] = useState(saveMovie);
+
     const [moviesFilterAll, setMoviesFilterAll] = useState(false);
     const [moviesFilterSave, setMoviesFilterSave] = useState(false);
+    
     const [searchLength, setSearchLength] = useState(false);
     const [searchLengthSave, setSearchLengthSave] = useState(false);
     const [submit, setSubmit] = useState(true)
@@ -131,7 +133,7 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
                     <MoviesCardList
                         button={button}
                         movies={submittedAll ? filterAllMovies : []}
-                        saveMovie={submittedSave ? filterSaveMovies : saveMovie}
+                        saveMovie={saveMovie}
                         loggedIn={loggedIn}
                         handleMovieDelete={handleMovieDelete}
                         moviesFilter={moviesFilterAll} />
@@ -166,28 +168,6 @@ function Movies({ loggedIn, button, movies, saveMovie, handleMovieDelete, isload
                         moviesFilter={moviesFilterSave} />
                     </>
                 ))))
-                // (
-                //     ((searchLengthSave) ? (
-                //         <>
-                //             <MoviesCardList
-                //                 button={button}
-                //                 movies={[]}
-                //                 saveMovie={saveMovie}
-                //                 loggedIn={loggedIn}
-                //                 handleMovieDelete={handleMovieDelete}
-                //                 moviesFilter={moviesFilter} />
-                //         </>
-                //     ) : (
-                //         <MoviesCardList
-                //             button={button}
-                //             movies={submittedAll ? filterAllMovies : []}
-                //             // saveMovie={submittedSave ? filterSaveMovies : saveMovie}
-                //             saveMovie={submittedSave && ((keywordSave === '') ? saveMovie : (filterSaveMovies))}
-                //             loggedIn={loggedIn}
-                //             handleMovieDelete={handleMovieDelete}
-                //             moviesFilter={moviesFilter} />
-                //     ))
-                // )
                 ) : (<Preloader />)}
             <Footer movies='true' />
         </Fragment>

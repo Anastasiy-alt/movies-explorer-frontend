@@ -49,7 +49,8 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
         return movieList.find((mov) => {
             // console.dir(movieList)
             // return mov.owner === movie.owner;
-            return mov.movieId === (movie.id || movie.movieId);
+            const sMov = mov.movieId === (movie.id || movie.movieId);
+            return sMov
         });
     }
 
@@ -58,6 +59,7 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
     const moviesShortcheck = moviesFilter ? shortMovies : moviesListShow
     const moviesShortcheckForSaved = moviesFilter ? shortSaveMovies : moviesSaveList
 
+    
     useEffect(() => {
         if (moviesFilter === true) {
             if (location.pathname === '/movies') {
