@@ -8,8 +8,8 @@ import Preloader from "../Preloader/Preloader";
 
 function MoviesSaved({ loggedIn, button, movies, saveMovie, handleMovieDelete, isloading }) {
 
-    const [keywordSave, setKeywordSave] = useState(localStorage.getItem('saveSearchValue') ? localStorage.getItem('saveSearchValue') : '');
-    const [submittedSave, setSubmittedSave] = useState(localStorage.getItem('saveIsSubmitted') === "true" ? true : keywordSave);
+    const [keywordSave, setKeywordSave] = useState('');
+    const [submittedSave, setSubmittedSave] = useState(keywordSave);
     const [filterSaveMovies, setFilterSaveMovies] = useState(saveMovie);
     const [moviesFilterSave, setMoviesFilterSave] = useState(false);
     const [searchLengthSave, setSearchLengthSave] = useState(false);
@@ -18,8 +18,7 @@ function MoviesSaved({ loggedIn, button, movies, saveMovie, handleMovieDelete, i
     const filterMoviesSave = (mov) => {
         return mov.filter(movie => movie.nameRU.toLowerCase().includes(keywordSave.toLowerCase()))
     }
-
-
+    
     const handleSearchSave = () => {
         const searcSaveMovies = filterMoviesSave(saveMovie)
         const searchMovSave = keywordSave ? searcSaveMovies : saveMovie
@@ -31,21 +30,11 @@ function MoviesSaved({ loggedIn, button, movies, saveMovie, handleMovieDelete, i
             setSubmittedSave(true)
         }
         setFilterSaveMovies(searchMovSave)
-
-        localStorage.setItem('saveIsSubmitted', true)
     }
 
     const handleChangeInputValueSave = (value) => {
-        localStorage.setItem('saveSearchValue', value);
         setKeywordSave(value);
     }
-
-    useEffect(() => {
-        const searchValueSave = localStorage.getItem('saveSearchValue')
-        setKeywordSave(searchValueSave)
-        setFilterSaveMovies(filterMoviesSave(saveMovie))
-    }, [])
-
 
     const onFilterSave = () => {
         setMoviesFilterSave((movFilter) => {

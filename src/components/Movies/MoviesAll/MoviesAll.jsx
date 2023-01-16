@@ -4,7 +4,6 @@ import Header from "../../Header/header";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import Preloader from "../Preloader/Preloader";
 
 function MoviesAll({ loggedIn, button, movies, saveMovie, handleMovieDelete, isloading }) {
@@ -76,7 +75,8 @@ function MoviesAll({ loggedIn, button, movies, saveMovie, handleMovieDelete, isl
                     onFilter={onFilterAll}
                     keyword={keywordAll}
                     onSearchChange={handleChangeInputValueAll}
-                    onClick={onClick} />
+                    // onClick={onClick}
+                     />
             {!isloading ? 
                ((!searchLength) ? (
                 <MoviesCardList

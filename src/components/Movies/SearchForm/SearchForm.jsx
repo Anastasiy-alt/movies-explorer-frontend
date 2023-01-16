@@ -11,7 +11,7 @@ function SearchForm({ onFilter, moviesFilter, keyword, onSearchChange, onSubmit,
     const { isValid } = useFormAndValidation();
 
 
-    const handleSavedMoviesFormSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         setIsFormValid(e.target.closest('form').checkValidity());
         if (!isFormValid) {
@@ -27,7 +27,7 @@ function SearchForm({ onFilter, moviesFilter, keyword, onSearchChange, onSubmit,
 
     return (
         <div className='search'>
-            <form className='search__form' noValidate onSubmit={handleSavedMoviesFormSubmit}>
+            <form className='search__form' noValidate onSubmit={handleSubmit}>
                 <input
                     type="text"
                     placeholder='Фильм'
