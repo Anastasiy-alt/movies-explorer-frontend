@@ -1,6 +1,6 @@
 import Api from './MainApi';
-export const BASE_URL = 'https://api.movies.anastasiya.nomoredomains.club';
-// export const BASE_URL = 'http://localhost:3001';
+// export const BASE_URL = 'https://api.movies.anastasiya.nomoredomains.club';
+export const BASE_URL = 'http://localhost:3001';
 
 export const register = (data) => {
     return fetch(`${BASE_URL}/signup`, {

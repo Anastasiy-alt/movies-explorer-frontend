@@ -17,6 +17,7 @@ import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
 import Profile from '../Profile/Profile';
 import Movies from '../Movies/MoviesComponent';
+import PopupSuccess from '../popup/popup';
 
 function App() {
 
@@ -28,6 +29,8 @@ function App() {
   const [isloading, setIsLoading] = useState(false);
   const [movie, setMovie] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
@@ -108,9 +111,13 @@ function App() {
       return api.setUserInfo({ name, email })
       .then((data) => {
         setCurrentUser(data);
+        setIsSuccess(true);
+        setIsPopupOpen(true);
       })
       .catch((error) => {
         console.log(`Ошибка: ${error}`);
+        setIsSuccess(false)
+        setIsPopupOpen(true);
       })
     }
   };
@@ -120,7 +127,6 @@ function App() {
       .authorize(data)
       .then((data) => {
         if (data.user) {
-          console.log(data.user)
           setCurrentUser(data.user);
           localStorage.setItem('jwt', data.token);
           setLoggedIn(true)
@@ -192,6 +198,9 @@ function App() {
       });
   }
 
+  const closePopup = () => {
+    setIsPopupOpen(false)
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -251,7 +260,10 @@ function App() {
           </Route>
 
         </Switch>
-
+        <PopupSuccess
+                    isSuccess={isSuccess}
+                    isOpen={isPopupOpen}
+                    onClose={closePopup} />
       </div>
     </CurrentUserContext.Provider>
   );
