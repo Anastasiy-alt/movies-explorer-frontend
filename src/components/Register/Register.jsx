@@ -1,10 +1,7 @@
-// import { useState } from "react";
 import Sign from '../Sign/Sign';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 
 function Register({ onRegister }) {
-
-    // const [userData, setUserData] = useState({ email: '', password: '' });
 
     const { values, handleChange, errors, isValid } = useFormAndValidation();
 

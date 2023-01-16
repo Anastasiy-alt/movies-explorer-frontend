@@ -16,8 +16,9 @@ import Login from '../Login/Login';
 import Register from '../Register/Register';
 import NotFound from '../NotFound/NotFound';
 import Profile from '../Profile/Profile';
-import Movies from '../Movies/MoviesComponent';
+import MoviesAll from '../Movies/MoviesAll/MoviesAll';
 import PopupSuccess from '../popup/popup';
+import MoviesSaved from '../Movies/MoviesSaved/MoviesSaved';
 
 function App() {
 
@@ -219,7 +220,7 @@ function App() {
 
           <ProtectedRoute exact path='/saved-movies'
             isloading={isloading}
-            component={Movies}
+            component={MoviesSaved}
             loggedIn={loggedIn}
             movies={movie}
             saveMovie={savedMovies}
@@ -230,7 +231,7 @@ function App() {
           <ProtectedRoute exact path='/movies'
             isloading={isloading}
             movies={movie}
-            component={Movies}
+            component={MoviesAll}
             loggedIn={loggedIn}
             saveMovie={savedMovies}
             button={handleSaveMovie}
