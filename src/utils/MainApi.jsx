@@ -18,7 +18,6 @@ class Api {
 
     getUser(jwt) {
         return fetch(`${this._baseUrl}/users/me`, {
-            credentials: 'include',
             headers: {
                 'Accept': "application/json",
                 'Content-Type': 'application/json',
@@ -29,10 +28,13 @@ class Api {
             .then(res => this._check(res))
     }
 
-    setUserInfo({ name, email }) {
+    setUserInfo({ name, email }, jwt) {
         return fetch(`${this._baseUrl}/users/me`, {
-            credentials: 'include',
-            headers: this._headers,
+           headers: {
+                'Accept': "application/json",
+                'Content-Type': 'application/json',
+                'authorization': `Bearer ${jwt}`,
+            },            
             method: 'PATCH',
             body: JSON.stringify({
                 name: name,
@@ -44,7 +46,6 @@ class Api {
 
     getSavedMovies(jwt) {
         return fetch(`${this._baseUrl}/movies`, {
-            credentials: 'include',
             headers: {
                 'Accept': "application/json",
                 'Content-Type': 'application/json',
@@ -56,11 +57,15 @@ class Api {
 
     }
 
-    saveMovie(movieData) {
+    saveMovie(movieData, jwt) {
         return fetch(`${this._baseUrl}/movies`, {
-            credentials: 'include',
             method: 'POST',
-            headers: this._headers,
+            credentials: 'include',
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': 'application/json',
+                'authorization': `Bearer ${jwt}`,
+            },
             body: JSON.stringify(
                 {
                     country: movieData.country,
@@ -80,11 +85,15 @@ class Api {
             .then(res => this._check(res));
     }
 
-    deleteSavedMovie(movieId) {
+    deleteSavedMovie(movieId, jwt) {
         return fetch(`${this._baseUrl}/movies/${movieId}`, {
-            credentials: 'include',
             method: 'DELETE',
-            headers: this._headers,
+            credentials: 'include',
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': 'application/json',
+                'authorization': `Bearer ${jwt}`,
+            },
         })
             .then(res => this._check(res))
     }
@@ -93,7 +102,10 @@ class Api {
         return fetch(`${this._baseUrl}/signout`, {
             method: 'POST',
             credentials: 'include',
-            headers: this._headers,
+            headers: {
+                'Accept': "application/json",
+                'Content-Type': 'application/json',
+            },
         })
             .then(res => this._check(res))
     }

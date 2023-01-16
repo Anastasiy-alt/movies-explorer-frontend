@@ -35,6 +35,10 @@ function App() {
   const [messageSuccess, setMessageSuccess] = useState('')
   const [messageError, setMessageError] = useState('')
 
+  // useEffect(() => {
+  //   const now = new Date(); console.log(`${now.toString()} save movie === `); console.dir(currentUser)
+  //   }, [currentUser]);
+
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
@@ -58,7 +62,6 @@ function App() {
       api.getUser(jwt)
         .then((userData) => {
           setCurrentUser(userData);
-          console.log('333')
         })
         .catch((err) => {
           setCurrentUser({})
@@ -99,13 +102,10 @@ function App() {
       });
   }
 
-  useEffect(() => {
-    const now = new Date(); console.log(`${now.toString()} save movie === `); console.dir(currentUser)
-    }, [currentUser]);
-
   const handleUpdateUser = ({ name, email }) => {
+    const jwt = localStorage.getItem('jwt')
     if (loggedIn) {
-      return api.setUserInfo({ name, email })
+      return api.setUserInfo({ name, email }, jwt)
       .then((data) => {
         setCurrentUser(data);
         setMessageSuccess('Вы успешно изменили данные!')
@@ -135,6 +135,11 @@ function App() {
           localStorage.setItem('jwt', data.token);
           setLoggedIn(true)
           history.push('/movies');
+          Promise.all([api.getSavedMovies(data.token), api.getUser(data.token)])
+          .then(([userData, moviesData]) => {
+            setSavedMovies(moviesData);
+            setCurrentUser(userData)
+          })
         }
       })
       .catch((err) => {
@@ -175,7 +180,6 @@ function App() {
       api.getSavedMovies(jwt)
         .then((res) => {
           setSavedMovies(res);
-          console.log('111')
         })
         .catch((err) => {
           console.log(`Ошибка: ${err.statusCode}`);
@@ -187,7 +191,8 @@ function App() {
   }, [loggedIn])
 
   const handleSaveMovie = (mov) => {
-    return api.saveMovie(mov)
+    const jwt = localStorage.getItem('jwt')
+    return api.saveMovie(mov, jwt)
       .then((mov) => {
         setSavedMovies([...savedMovies, mov.data]);
       })
@@ -198,8 +203,9 @@ function App() {
   }
 
   const handleMovieDelete = (movie) => {
+    const jwt = localStorage.getItem('jwt')
     const saveMovie = savedMovies.find((mov) => mov.movieId === movie.id || mov.movieId === movie.movieId);
-    api.deleteSavedMovie(saveMovie._id)
+    api.deleteSavedMovie(saveMovie._id, jwt)
       .then(() => {
         const newLSavedMoviesList = savedMovies.filter((mov) => {
           if (movie.id === mov.movieId || movie.movieId === mov.movieId) {

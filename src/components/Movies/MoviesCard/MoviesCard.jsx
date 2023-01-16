@@ -4,17 +4,17 @@ import { useLocation } from 'react-router-dom';
 
 function MoviesCard({ movie, onCardLike, handleMovieDelete, save }) {
 
-    const [saved, setSaved] = useState()
+    // const [saved, setSaved] = useState()
     const location = useLocation();
 
     const handleSaveClick = () => {
         onCardLike(movie)
-        setSaved(true)
+        // setSaved(true)
     };
 
     const handleRemoveSaveClick = () => {
         handleMovieDelete(movie)
-        setSaved(false)
+        // setSaved(false)
     };
 
     function handleChangeMovieStatus() {
@@ -44,7 +44,7 @@ function MoviesCard({ movie, onCardLike, handleMovieDelete, save }) {
                 </>
                 :
                 <>
-                    <button className={cardSaveButtonClassName} type="button" onClick={handleChangeMovieStatus} disabled={saved}></button>
+                    <button className={cardSaveButtonClassName} type="button" onClick={handleChangeMovieStatus}></button>
                     <img src={`https://api.nomoreparties.co${movie.image.url}`} alt={movie.nameRU} className='card__img' />
                 </>
             }
