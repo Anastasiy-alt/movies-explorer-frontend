@@ -4,8 +4,8 @@ import { CurrentUserContext } from '../../context/CurrentUserContext';
 import { useFormAndValidation } from '../../hooks/useFormAndValidation';
 
 function Profile({ onSignOut, onUpdateUser }) {
-    const currentUser = useContext(CurrentUserContext);
     
+    const currentUser = useContext(CurrentUserContext);
     const { values, handleChange, errors, resetForm, isValid } = useFormAndValidation();
     const updateProfile = (!(currentUser.email === values.email) || !(currentUser.name === values.name))
 
@@ -19,18 +19,18 @@ function Profile({ onSignOut, onUpdateUser }) {
 
     useEffect(() => {
         if (currentUser) {
-          resetForm(currentUser, {}, true);
+            resetForm(currentUser, {}, true);
         }
-      }, [currentUser, resetForm]);
+    }, [currentUser, resetForm]);
 
-      return (
+    return (
         <Fragment>
             <Header
                 loggedIn='true'
                 movies='true' />
             <div className="profile">
                 <h1 className="profile__title">Привет, {currentUser.name}!</h1>
-                <form className="profile__form"  onSubmit={handleSubmit}>
+                <form className="profile__form" onSubmit={handleSubmit}>
                     <label className='profile__label'>Имя
                         <input
                             onChange={handleChange}
@@ -55,10 +55,10 @@ function Profile({ onSignOut, onUpdateUser }) {
                     </label>
                     <span className='profile__error'>{errors.email}</span>
                     <div className="profile__links">
-                    <button className='profile__edit button' type='submit' disabled={!updateProfile || !isValid}>Редактировать</button>
-                    <button className='profile__logout link button' type='button' onClick={onSignOut}>Выйти из аккаунта</button>
-                </div>
-                </form>        
+                        <button className='profile__edit button' type='submit' disabled={!updateProfile || !isValid}>Редактировать</button>
+                        <button className='profile__logout link button' type='button' onClick={onSignOut}>Выйти из аккаунта</button>
+                    </div>
+                </form>
             </div>
         </Fragment>
     )

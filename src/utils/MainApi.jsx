@@ -30,11 +30,11 @@ class Api {
 
     setUserInfo({ name, email }, jwt) {
         return fetch(`${this._baseUrl}/users/me`, {
-           headers: {
+            headers: {
                 'Accept': "application/json",
                 'Content-Type': 'application/json',
                 'authorization': `Bearer ${jwt}`,
-            },            
+            },
             method: 'PATCH',
             body: JSON.stringify({
                 name: name,
@@ -54,7 +54,6 @@ class Api {
             method: 'GET'
         })
             .then(res => this._check(res))
-
     }
 
     saveMovie(movieData, jwt) {

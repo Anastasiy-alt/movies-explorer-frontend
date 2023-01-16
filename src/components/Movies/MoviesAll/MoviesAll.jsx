@@ -63,31 +63,31 @@ function MoviesAll({ loggedIn, button, movies, saveMovie, handleMovieDelete, isl
                 onSearchChange={handleChangeInputValueAll}
             // onClick={onClick}
             />
-            {JSON.parse(localStorage.getItem('movies')) === null ? <span>Начните поиск фильмов</span> : 
-            (!isloading ?
-                ((!searchLength) ? (
-                    <MoviesCardList
-                        button={button}
-                        movies={filterAllMovies.length === 0 ? JSON.parse(localStorage.getItem('movies')) : filterAllMovies}
-                        saveMovie={saveMovie}
-                        handleMovieDelete={handleMovieDelete}
-                        moviesFilter={moviesFilterAll}
-                        shortMovies={shortMovies}
-                        shortSaveMovies={[]} />
-                ) : (
-                    <>
-                        <span>Ничего не найдено</span>
+            {JSON.parse(localStorage.getItem('movies')) === null ? <span>Начните поиск фильмов</span> :
+                (!isloading ?
+                    ((!searchLength) ? (
                         <MoviesCardList
                             button={button}
-                            movies={[]}
-                            saveMovie={[]}
+                            movies={filterAllMovies.length === 0 ? JSON.parse(localStorage.getItem('movies')) : filterAllMovies}
+                            saveMovie={saveMovie}
                             handleMovieDelete={handleMovieDelete}
                             moviesFilter={moviesFilterAll}
                             shortMovies={shortMovies}
                             shortSaveMovies={[]} />
-                    </>
-                )) : (<Preloader />))
-}
+                    ) : (
+                        <>
+                            <span>Ничего не найдено</span>
+                            <MoviesCardList
+                                button={button}
+                                movies={[]}
+                                saveMovie={[]}
+                                handleMovieDelete={handleMovieDelete}
+                                moviesFilter={moviesFilterAll}
+                                shortMovies={shortMovies}
+                                shortSaveMovies={[]} />
+                        </>
+                    )) : (<Preloader />))
+            }
             <Footer movies='true' />
         </Fragment>
     )

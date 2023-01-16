@@ -1,7 +1,7 @@
 import yes from '../../images/yes.svg';
 import no from '../../images/no.svg';
 
-function PopupSuccess ({ isOpen, onClose, isSuccess, messageSuccess, messageError }) {
+function PopupSuccess({ isOpen, onClose, isSuccess, messageSuccess, messageError }) {
 
     return (
         <div className={`popup ${isOpen && "popup_opened"}`}>

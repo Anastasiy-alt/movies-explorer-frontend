@@ -106,23 +106,23 @@ function App() {
     const jwt = localStorage.getItem('jwt')
     if (loggedIn) {
       return api.setUserInfo({ name, email }, jwt)
-      .then((data) => {
-        setCurrentUser(data);
-        setMessageSuccess('Вы успешно изменили данные!')
-        setIsSuccess(true);
-        setIsPopupOpen(true);
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err.statusCode}`);
-        if (err.statusCode === 1100) {
-          setMessageError('Пользователь с данным email уже существует.')
-        } else {
-          setMessageError('Что-то пошло не так! Попробуйте ещё раз')
-        }
+        .then((data) => {
+          setCurrentUser(data);
+          setMessageSuccess('Вы успешно изменили данные!')
+          setIsSuccess(true);
+          setIsPopupOpen(true);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err.statusCode}`);
+          if (err.statusCode === 1100) {
+            setMessageError('Пользователь с данным email уже существует.')
+          } else {
+            setMessageError('Что-то пошло не так! Попробуйте ещё раз')
+          }
 
-        setIsSuccess(false)
-        setIsPopupOpen(true);
-      })
+          setIsSuccess(false)
+          setIsPopupOpen(true);
+        })
     }
   };
 
@@ -136,10 +136,10 @@ function App() {
           setLoggedIn(true)
           history.push('/movies');
           Promise.all([api.getSavedMovies(data.token), api.getUser(data.token)])
-          .then(([userData, moviesData]) => {
-            setSavedMovies(moviesData);
-            setCurrentUser(userData)
-          })
+            .then(([userData, moviesData]) => {
+              setSavedMovies(moviesData);
+              setCurrentUser(userData)
+            })
         }
       })
       .catch((err) => {
@@ -155,7 +155,7 @@ function App() {
   function handleRegister(data) {
     return auth
       .register(data)
-      .then((data) => {  
+      .then((data) => {
         handleLogin(data)
         setMessageSuccess('Вы успешно зарегестрировались!')
         setIsSuccess(true);
@@ -283,11 +283,11 @@ function App() {
 
         </Switch>
         <PopupSuccess
-                    isSuccess={isSuccess}
-                    isOpen={isPopupOpen}
-                    onClose={closePopup}
-                    messageSuccess={messageSuccess}
-                    messageError={messageError} />
+          isSuccess={isSuccess}
+          isOpen={isPopupOpen}
+          onClose={closePopup}
+          messageSuccess={messageSuccess}
+          messageError={messageError} />
       </div>
     </CurrentUserContext.Provider>
   );

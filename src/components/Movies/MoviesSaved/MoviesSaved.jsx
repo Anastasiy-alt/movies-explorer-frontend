@@ -3,7 +3,7 @@ import Footer from "../../Footer/footer";
 import Header from "../../Header/header";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Preloader from "../Preloader/Preloader";
 
 function MoviesSaved({ loggedIn, button, saveMovie, handleMovieDelete, isloading }) {
@@ -16,11 +16,10 @@ function MoviesSaved({ loggedIn, button, saveMovie, handleMovieDelete, isloading
     const [submit, setSubmit] = useState(true)
     const shortSaveMovies = saveMovie.filter(movie => movie.duration < 40)
 
-
     const filterMoviesSave = (mov) => {
         return mov.filter(movie => movie.nameRU.toLowerCase().includes(keywordSave.toLowerCase()))
     }
-    
+
     const handleSearchSave = () => {
         const searcSaveMovies = filterMoviesSave(saveMovie)
         const searchMovSave = keywordSave ? searcSaveMovies : saveMovie
@@ -58,22 +57,22 @@ function MoviesSaved({ loggedIn, button, saveMovie, handleMovieDelete, isloading
             <Header
                 loggedIn={loggedIn}
                 movies='true' />
-                <SearchForm
-                    onSubmit={handleSearchSave}
-                    moviesFilter={moviesFilterSave}
-                    onFilter={onFilterSave}
-                    keyword={keywordSave}
-                    onSearchChange={handleChangeInputValueSave}
-                    onClick={onClick} />
-            {!isloading ? (submit ? 
-            (<MoviesCardList
-                button={button}
-                movies={[]}
-                saveMovie={saveMovie}
-                handleMovieDelete={handleMovieDelete}
+            <SearchForm
+                onSubmit={handleSearchSave}
                 moviesFilter={moviesFilterSave}
-                shortSaveMovies={shortSaveMovies}
-                shortMovies={[]} />) :
+                onFilter={onFilterSave}
+                keyword={keywordSave}
+                onSearchChange={handleChangeInputValueSave}
+                onClick={onClick} />
+            {!isloading ? (submit ?
+                (<MoviesCardList
+                    button={button}
+                    movies={[]}
+                    saveMovie={saveMovie}
+                    handleMovieDelete={handleMovieDelete}
+                    moviesFilter={moviesFilterSave}
+                    shortSaveMovies={shortSaveMovies}
+                    shortMovies={[]} />) :
 
                 ((!searchLengthSave ?
                     (<MoviesCardList
@@ -84,21 +83,21 @@ function MoviesSaved({ loggedIn, button, saveMovie, handleMovieDelete, isloading
                         moviesFilter={moviesFilterSave}
                         shortSaveMovies={shortSaveMovies}
                         shortMovies={[]} />)
-                       
-                 : (
-                    <>
-                    <span>Ничего не найдено</span>
-                    <MoviesCardList
-                        button={button}
-                        movies={[]}
-                        saveMovie={saveMovie}
-                        handleMovieDelete={handleMovieDelete}
-                        moviesFilter={moviesFilterSave}
-                        shortSaveMovies={shortSaveMovies}
-                        shortMovies={[]} />
-                    </>
-                ))))
-                 : (<Preloader />)}
+
+                    : (
+                        <>
+                            <span>Ничего не найдено</span>
+                            <MoviesCardList
+                                button={button}
+                                movies={[]}
+                                saveMovie={saveMovie}
+                                handleMovieDelete={handleMovieDelete}
+                                moviesFilter={moviesFilterSave}
+                                shortSaveMovies={shortSaveMovies}
+                                shortMovies={[]} />
+                        </>
+                    ))))
+                : (<Preloader />)}
             <Footer movies='true' />
         </Fragment>
     )

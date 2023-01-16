@@ -55,7 +55,7 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
     const moviesShortcheck = moviesFilter ? shortMovies : moviesListShow
     const moviesShortcheckForSaved = moviesFilter ? shortSaveMovies : moviesSaveList
 
-    
+
     useEffect(() => {
         if (moviesFilter === true) {
             if (location.pathname === '/movies') {
@@ -63,13 +63,14 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
                     setNotMov(true)
                 } else {
                     setNotMov(false)
-                } }
-                if (location.pathname === '/saved-movies') {
-                    if (moviesShortcheckForSaved.length === 0) {
-                        setNotMov(true)
-                    } else {
-                        setNotMov(false)
-                    }  
+                }
+            }
+            if (location.pathname === '/saved-movies') {
+                if (moviesShortcheckForSaved.length === 0) {
+                    setNotMov(true)
+                } else {
+                    setNotMov(false)
+                }
             }
         } else {
             setNotMov(false)
