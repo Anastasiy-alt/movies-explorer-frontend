@@ -32,6 +32,8 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [messageSuccess, setMessageSuccess] = useState('')
+  const [messageError, setMessageError] = useState('')
 
   const tokenCheck = () => {
     const jwt = localStorage.getItem('jwt');
@@ -42,7 +44,7 @@ function App() {
           setLoggedIn(true);
           history.push(location.pathname);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.statusCode));
     }
   }
 
@@ -51,25 +53,19 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    if (!loggedIn) {
-      setCurrentUser({})
-    }
-  }, [loggedIn]);
-
-  useEffect(() => {
     const jwt = localStorage.getItem('jwt')
-    if (jwt) {
-    if (loggedIn) {
+    if (loggedIn && jwt) {
       api.getUser(jwt)
         .then((userData) => {
           setCurrentUser(userData);
+          console.log('333')
         })
         .catch((err) => {
           setCurrentUser({})
-          console.log(`Ошибка: ${err}`);
+          console.log(`Ошибка: ${err.statusCode}`);
           console.dir(err)
         });
-    }}
+    }
   }, [loggedIn])
 
   useEffect(() => {
@@ -98,25 +94,32 @@ function App() {
         history.push('/');
         setCurrentUser({});
       })
-      .catch((error) => {
-        console.log(`Ошибка: ${error}`);
+      .catch((err) => {
+        console.log(`Ошибка: ${err.statusCode}`);
       });
   }
 
-  // useEffect(() => {
-  //   const now = new Date(); console.log(`${now.toString()} test === `); console.dir(currentUser)
-  //   }, [currentUser]);
+  useEffect(() => {
+    const now = new Date(); console.log(`${now.toString()} save movie === `); console.dir(currentUser)
+    }, [currentUser]);
 
   const handleUpdateUser = ({ name, email }) => {
     if (loggedIn) {
       return api.setUserInfo({ name, email })
       .then((data) => {
         setCurrentUser(data);
+        setMessageSuccess('Вы успешно изменили данные!')
         setIsSuccess(true);
         setIsPopupOpen(true);
       })
-      .catch((error) => {
-        console.log(`Ошибка: ${error}`);
+      .catch((err) => {
+        console.log(`Ошибка: ${err.statusCode}`);
+        if (err.statusCode === 1100) {
+          setMessageError('Пользователь с данным email уже существует.')
+        } else {
+          setMessageError('Что-то пошло не так! Попробуйте ещё раз')
+        }
+
         setIsSuccess(false)
         setIsPopupOpen(true);
       })
@@ -131,12 +134,16 @@ function App() {
           setCurrentUser(data.user);
           localStorage.setItem('jwt', data.token);
           setLoggedIn(true)
-          // tokenCheck();
           history.push('/movies');
         }
       })
       .catch((err) => {
-        console.log(`Ошибка: ${err}`);
+        console.log(`Ошибка: ${err.statusCode}`);
+        if (err.statusCode === 401) {
+          setMessageError('Неправильные почта или пароль.')
+        }
+        setIsSuccess(false)
+        setIsPopupOpen(true);
       })
   }
 
@@ -144,30 +151,39 @@ function App() {
     return auth
       .register(data)
       .then((data) => {  
-        setLoggedIn(true)
         handleLogin(data)
+        setMessageSuccess('Вы успешно зарегестрировались!')
+        setIsSuccess(true);
+        setIsPopupOpen(true);
       })
       .catch((err) => {
-        console.log(`Ошибка: ${err}`);
+        if (err.statusCode === 409) {
+          setMessageError('Пользователь с данным email уже существует.')
+        } else {
+          setMessageError('Что-то пошло не так! Попробуйте ещё раз')
+        }
+        setIsSuccess(false);
+        setIsPopupOpen(true);
+        console.log(`Ошибка: ${err.statusCode}`);
       })
   }
 
   useEffect(() => {
     setIsLoading(true);
     const jwt = localStorage.getItem('jwt')
-    if (jwt) {
-    if (loggedIn) {
+    if (loggedIn && jwt) {
       api.getSavedMovies(jwt)
         .then((res) => {
           setSavedMovies(res);
+          console.log('111')
         })
         .catch((err) => {
-          console.log(`Ошибка: ${err}`);
+          console.log(`Ошибка: ${err.statusCode}`);
         })
         .finally(() => {
           setIsLoading(false);
         });
-    }}
+    }
   }, [loggedIn])
 
   const handleSaveMovie = (mov) => {
@@ -177,7 +193,7 @@ function App() {
       })
       .catch((err) => {
         console.dir(err)
-        console.log(`Ошибка: ${err} ${err.message}`);
+        console.log(`Ошибка: ${err.statusCode} ${err.message}`);
       })
   }
 
@@ -195,7 +211,7 @@ function App() {
         setSavedMovies(newLSavedMoviesList);
       })
       .catch((err) => {
-        console.log(`Ошибка: ${err} ${err.message}`);
+        console.log(`Ошибка: ${err.statusCode} ${err.message}`);
       });
   }
 
@@ -222,7 +238,6 @@ function App() {
             isloading={isloading}
             component={MoviesSaved}
             loggedIn={loggedIn}
-            movies={movie}
             saveMovie={savedMovies}
             button={handleSaveMovie}
             handleMovieDelete={handleMovieDelete}
@@ -264,7 +279,9 @@ function App() {
         <PopupSuccess
                     isSuccess={isSuccess}
                     isOpen={isPopupOpen}
-                    onClose={closePopup} />
+                    onClose={closePopup}
+                    messageSuccess={messageSuccess}
+                    messageError={messageError} />
       </div>
     </CurrentUserContext.Provider>
   );

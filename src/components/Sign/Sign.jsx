@@ -51,7 +51,6 @@ function Sign({ welcome, buttonName, bottomText, linkText, link, handleSubmit, h
                 </div>
                 <button type="submit" className="button sign__button" disabled={!isValid}>{buttonName}</button>
             </form>
-
             <div className="sign__bottom">
                 <p className="sign__bottom-text">{bottomText}</p>
                 <Link to={link} className="sign__bottom-link link">{linkText}</Link>

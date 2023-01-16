@@ -12,6 +12,8 @@ function MoviesAll({ loggedIn, button, movies, saveMovie, handleMovieDelete, isl
     const [filterAllMovies, setFilterAllMovies] = useState(movies);
     const [moviesFilterAll, setMoviesFilterAll] = useState(false);
     const [searchLength, setSearchLength] = useState(false);
+    const shortMovies = movies.filter(movie => movie.duration < 40)
+
     const filterMoviesAll = (mov) => {
         return mov.filter(movie => movie.nameRU.toLowerCase().includes(keywordAll.toLowerCase()))
     }
@@ -47,7 +49,7 @@ function MoviesAll({ loggedIn, button, movies, saveMovie, handleMovieDelete, isl
             return !movFilter
         })
     }
-    
+
     return (
         <Fragment>
             <Header
@@ -61,16 +63,17 @@ function MoviesAll({ loggedIn, button, movies, saveMovie, handleMovieDelete, isl
                 onSearchChange={handleChangeInputValueAll}
             // onClick={onClick}
             />
-            {JSON.parse(localStorage.getItem('movies')).length === 0 && <span>Ничего не найдено</span>}
-            {!isloading ?
+            {JSON.parse(localStorage.getItem('movies')) === null ? <span>Начните поиск фильмов</span> : 
+            (!isloading ?
                 ((!searchLength) ? (
                     <MoviesCardList
                         button={button}
                         movies={filterAllMovies.length === 0 ? JSON.parse(localStorage.getItem('movies')) : filterAllMovies}
                         saveMovie={saveMovie}
-                        loggedIn={loggedIn}
                         handleMovieDelete={handleMovieDelete}
-                        moviesFilter={moviesFilterAll} />
+                        moviesFilter={moviesFilterAll}
+                        shortMovies={shortMovies}
+                        shortSaveMovies={[]} />
                 ) : (
                     <>
                         <span>Ничего не найдено</span>
@@ -78,11 +81,13 @@ function MoviesAll({ loggedIn, button, movies, saveMovie, handleMovieDelete, isl
                             button={button}
                             movies={[]}
                             saveMovie={[]}
-                            loggedIn={loggedIn}
                             handleMovieDelete={handleMovieDelete}
-                            moviesFilter={moviesFilterAll} />
+                            moviesFilter={moviesFilterAll}
+                            shortMovies={shortMovies}
+                            shortSaveMovies={[]} />
                     </>
-                )) : (<Preloader />)}
+                )) : (<Preloader />))
+}
             <Footer movies='true' />
         </Fragment>
     )

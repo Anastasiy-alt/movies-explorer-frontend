@@ -36,7 +36,6 @@ function SearchForm({ onFilter, moviesFilter, keyword, onSearchChange, onSubmit,
                     value={keyword || ''}
                     onChange={handleChange}
                     required />
-
                 <button type="submit" className="button search__button" onClick={onClick}></button>
             </form>
             <Toggle onFilter={onFilter} moviesFilter={moviesFilter} />

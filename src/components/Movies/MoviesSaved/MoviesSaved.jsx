@@ -6,7 +6,7 @@ import SearchForm from "../SearchForm/SearchForm";
 import { useState, useEffect } from 'react';
 import Preloader from "../Preloader/Preloader";
 
-function MoviesSaved({ loggedIn, button, movies, saveMovie, handleMovieDelete, isloading }) {
+function MoviesSaved({ loggedIn, button, saveMovie, handleMovieDelete, isloading }) {
 
     const [keywordSave, setKeywordSave] = useState('');
     const [submittedSave, setSubmittedSave] = useState(keywordSave);
@@ -14,6 +14,8 @@ function MoviesSaved({ loggedIn, button, movies, saveMovie, handleMovieDelete, i
     const [moviesFilterSave, setMoviesFilterSave] = useState(false);
     const [searchLengthSave, setSearchLengthSave] = useState(false);
     const [submit, setSubmit] = useState(true)
+    const shortSaveMovies = saveMovie.filter(movie => movie.duration < 40)
+
 
     const filterMoviesSave = (mov) => {
         return mov.filter(movie => movie.nameRU.toLowerCase().includes(keywordSave.toLowerCase()))
@@ -63,22 +65,25 @@ function MoviesSaved({ loggedIn, button, movies, saveMovie, handleMovieDelete, i
                     keyword={keywordSave}
                     onSearchChange={handleChangeInputValueSave}
                     onClick={onClick} />
-            {!isloading ? (submit ? (<MoviesCardList
+            {!isloading ? (submit ? 
+            (<MoviesCardList
                 button={button}
                 movies={[]}
                 saveMovie={saveMovie}
-                loggedIn={loggedIn}
                 handleMovieDelete={handleMovieDelete}
-                moviesFilter={moviesFilterSave} />) :
+                moviesFilter={moviesFilterSave}
+                shortSaveMovies={shortSaveMovies}
+                shortMovies={[]} />) :
 
                 ((!searchLengthSave ?
                     (<MoviesCardList
                         button={button}
                         movies={[]}
                         saveMovie={submittedSave ? filterSaveMovies : saveMovie}
-                        loggedIn={loggedIn}
                         handleMovieDelete={handleMovieDelete}
-                        moviesFilter={moviesFilterSave} />)
+                        moviesFilter={moviesFilterSave}
+                        shortSaveMovies={shortSaveMovies}
+                        shortMovies={[]} />)
                        
                  : (
                     <>
@@ -87,9 +92,10 @@ function MoviesSaved({ loggedIn, button, movies, saveMovie, handleMovieDelete, i
                         button={button}
                         movies={[]}
                         saveMovie={saveMovie}
-                        loggedIn={loggedIn}
                         handleMovieDelete={handleMovieDelete}
-                        moviesFilter={moviesFilterSave} />
+                        moviesFilter={moviesFilterSave}
+                        shortSaveMovies={shortSaveMovies}
+                        shortMovies={[]} />
                     </>
                 ))))
                  : (<Preloader />)}

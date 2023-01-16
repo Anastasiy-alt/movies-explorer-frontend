@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import useScreenWidth from '../../../hooks/useScreenWidth';
 import { useState, useEffect, Fragment } from "react";
 
-function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFilter }) {
+function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFilter, shortMovies, shortSaveMovies }) {
 
     const location = useLocation();
     const screenWidth = useScreenWidth();
@@ -47,15 +47,11 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
 
     function getSavedMoviesFun(movieList, movie) {
         return movieList.find((mov) => {
-            // console.dir(movieList)
-            // return mov.owner === movie.owner;
             const sMov = mov.movieId === (movie.id || movie.movieId);
             return sMov
         });
     }
 
-    const shortMovies = movies.filter(movie => movie.duration < 40)
-    const shortSaveMovies = saveMovie.filter(movie => movie.duration < 40)
     const moviesShortcheck = moviesFilter ? shortMovies : moviesListShow
     const moviesShortcheckForSaved = moviesFilter ? shortSaveMovies : moviesSaveList
 
@@ -88,7 +84,6 @@ function MoviesCardList({ saveMovie, movies, button, handleMovieDelete, moviesFi
                         <MoviesCard movie={movie}
                             key={movie._id || movie.id}
                             save={getSavedMoviesFun(saveMovie, movie)}
-                            // save={saveMovie}
                             onCardLike={button}
                             handleMovieDelete={handleMovieDelete}
                         />
