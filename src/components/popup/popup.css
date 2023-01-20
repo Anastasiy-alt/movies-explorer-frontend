@@ -1,0 +1,115 @@
+.popup {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.5s, opacity 0.5s ease-in;
+}
+
+.popup_opened {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup__container {
+    width: 430px;
+    height: 370px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    z-index: 4;
+}
+
+.popup__container_for_tooltip {
+    width: 430px;
+    height: 330px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.popup__icon {
+    width: 120px;
+    height: 120px;
+    padding-top: 68px;
+    margin-bottom: 32px;
+}
+
+.popup__close {
+    background-image: url(../../images/CloseIconKrest.svg);
+    background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    background-color: transparent;
+    margin-top: -40px;
+    margin-left: 438px;
+}
+
+.popup__heading {
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    margin: 0;
+    padding: 0;
+    margin-top: 34px;
+    margin-left: 36px;
+    margin-bottom: 50px;
+}
+
+.popup__heading_for_tooltip {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    color: #000000;
+    margin: 0;
+    width: 358px;
+}
+
+@media screen and (max-width: 625px) {
+    .popup__heading {
+        font-weight: 900;
+        font-size: 18px;
+        line-height: 22px;
+        margin-top: 41px;
+        margin-left: 22px;
+        margin-bottom: 75px;
+    }
+
+    .popup__container {
+        width: 282px;
+        min-height: 322px;
+        top: calc(50% - 161px);
+        right: calc(50% - 141px);
+    }
+
+    .popup__container_for_tooltip {
+        width: 280px;
+        height: 308px;
+        height: auto;
+    }
+
+    .popup__close {
+        width: 20px;
+        height: 20px;
+        margin-top: -36px;
+        margin-left: 262px;
+        background-image: url(../../images/CloseIconmini.svg);
+    }
+}

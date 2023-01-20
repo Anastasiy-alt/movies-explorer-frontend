@@ -1,30 +1,48 @@
-import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-function MoviesCard({ title, time, poster }) {
-    // const currentUser = useContext(CurrentUserContext);
-    const [saved, setSaved] = useState(false)
+function MoviesCard({ movie, onCardLike, handleMovieDelete, save }) {
+
     const location = useLocation();
 
     const handleSaveClick = () => {
-        setSaved(!saved);
+        onCardLike(movie)
     };
 
     const handleRemoveSaveClick = () => {
-        setSaved(false);
+        handleMovieDelete(movie)
     };
 
-    const cardSaveButtonClassName = `button card__button ${saved && 'card__button_click'}`
+    function handleChangeMovieStatus() {
+        if (((location.pathname === '/movies') && save) || (!(location.pathname === '/movies') && save)) {
+            handleRemoveSaveClick()
+        } else {
+            handleSaveClick()
+        }
+    }
+
+    function timeConvert(duration) {
+        let hours = Math.floor(duration / 60);
+        let minutes = duration % 60;
+        return (`${hours}ч ${minutes}м`)
+    }
+
+    const cardSaveButtonClassName = `button card__button ${save && 'card__button_click'}`
 
     return (
         <article className='card'>
-            <h3 className='card__title'>{title}</h3>
-            <p className='card__time'>{time}</p>
+            <h3 className='card__title'>{movie.nameRU}</h3>
+            <p className='card__time'>{timeConvert(movie.duration)}</p>
             {location.pathname === '/saved-movies' ?
-                <button className='button card__button card__button_delete' type="button"></button>
-                : <button className={cardSaveButtonClassName} type="button" onClick={saved ? handleRemoveSaveClick : handleSaveClick}></button>
+                <>
+                    <button className='button card__button card__button_delete' type="button" onClick={handleRemoveSaveClick}></button>
+                    <img src={`${movie.image}`} alt={movie.nameRU} className='card__img' />
+                </>
+                :
+                <>
+                    <button className={cardSaveButtonClassName} type="button" onClick={handleChangeMovieStatus}></button>
+                    <img src={`https://api.nomoreparties.co${movie.image.url}`} alt={movie.nameRU} className='card__img' />
+                </>
             }
-            <img src={poster} alt={title} className='card__img' />
         </article>
     )
 }
